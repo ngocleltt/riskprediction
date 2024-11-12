@@ -19,7 +19,7 @@ class SplashScreen extends StatelessWidget {
                 width: 300,
                 height: 300,
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 5),
               Text(
                 'Risk Prediction',
                 style: AppStyles.headingStyle,
