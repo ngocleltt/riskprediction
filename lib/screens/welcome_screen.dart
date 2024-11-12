@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riskprediction/styles/app_style.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -39,12 +40,7 @@ class WelcomeScreen extends StatelessWidget {
                 // Navigate to Login Screen
               },
               child: Text('Log In'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFBB127),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
+              style: AppStyles.elevatedButtonStyle,
             ),
             SizedBox(height: 10),
             OutlinedButton(
@@ -52,12 +48,7 @@ class WelcomeScreen extends StatelessWidget {
                 // Navigate to Sign Up Screen
               },
               child: Text('Sign Up'),
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Color(0xFFFBB127)),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
+              style: AppStyles.elevatedButtonStyle,
             ),
           ],
         ),
