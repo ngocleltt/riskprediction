@@ -22,11 +22,11 @@ class SplashScreen extends StatelessWidget {
               SizedBox(height: 5),
               Text(
                 'Risk Prediction',
-                style: AppStyles.headingStyle,
+                style: AppStyles.headingStyle.copyWith(color: Colors.white),
               ),
               Text(
                 'Huỳnh Trần An Bình',
-                style: AppStyles.subHeadingStyle,
+                style: AppStyles.subHeadingStyle.copyWith(color: Colors.white),
               ),
             ],
           ),
