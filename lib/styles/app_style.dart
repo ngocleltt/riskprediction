@@ -23,6 +23,12 @@ class AppStyles {
     fontFamily: 'League Spartan',
   );
 
+  static const TextStyle upbarStyle = TextStyle(
+    fontSize: 12,
+    color: Colors.orange,
+    fontFamily: 'League Spartan',
+  );
+
   static final ButtonStyle elevatedButtonStyle = ElevatedButton.styleFrom(
     backgroundColor: primaryColor,
     shape: RoundedRectangleBorder(

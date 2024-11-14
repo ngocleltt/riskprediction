@@ -84,36 +84,36 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ListTile(
-                          title: Text('English'),
-                          onTap: () => _changeLanguage(Locale('en')),
+                          title: Text('English', style: AppStyles.upbarStyle),
+                          onTap: () => widget.onLocaleChange(Locale('en')),
                         ),
                         ListTile(
-                          title: Text('Русский'),
-                          onTap: () => _changeLanguage(Locale('ru')),
+                          title: Text('Русский', style: AppStyles.upbarStyle),
+                          onTap: () => widget.onLocaleChange(Locale('ru')),
                         ),
                         ListTile(
-                          title: Text('Tiếng Việt'),
-                          onTap: () => _changeLanguage(Locale('vi')),
+                          title: Text('Tiếng Việt', style: AppStyles.upbarStyle),
+                          onTap: () => widget.onLocaleChange(Locale('vi')),
                         ),
                         ListTile(
-                          title: Text('Deutsch'),
-                          onTap: () => _changeLanguage(Locale('de')),
+                          title: Text('Deutsch', style: AppStyles.upbarStyle),
+                          onTap: () => widget.onLocaleChange(Locale('de')),
                         ),
                         ListTile(
-                          title: Text('Français'),
-                          onTap: () => _changeLanguage(Locale('fr')),
+                          title: Text('Français', style: AppStyles.upbarStyle),
+                          onTap: () => widget.onLocaleChange(Locale('fr')),
                         ),
                         ListTile(
-                          title: Text('عربي'),
-                          onTap: () => _changeLanguage(Locale('ar')),
+                          title: Text('عربي', style: AppStyles.upbarStyle),
+                          onTap: () => widget.onLocaleChange(Locale('ar')),
                         ),
                         ListTile(
-                          title: Text('中文'),
-                          onTap: () => _changeLanguage(Locale('zh')),
+                          title: Text('中文', style: AppStyles.upbarStyle),
+                          onTap: () => widget.onLocaleChange(Locale('zh')),
                         ),
                         ListTile(
-                          title: Text('Español'),
-                          onTap: () => _changeLanguage(Locale('es')),
+                          title: Text('Español', style: AppStyles.upbarStyle),
+                          onTap: () => widget.onLocaleChange(Locale('es')),
                         ),
                       ],
                     ),
@@ -142,8 +142,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: AppLocalizations.of(context)?.translate('email_or_mobile') ??
                     'Email or Mobile Number',
                 hintText: 'example@example.com',
-                labelStyle: AppStyles.bodyStyle,
-                hintStyle: AppStyles.bodyStyle,
+                labelStyle: AppStyles.bodyStyle.copyWith(color: AppStyles.bodyStyle.color?.withOpacity(0.3)),
+                hintStyle: AppStyles.bodyStyle.copyWith(color: AppStyles.bodyStyle.color?.withOpacity(0.5)),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -154,8 +154,8 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)?.translate('password') ?? 'Password',
                 hintText: '********',
-                labelStyle: AppStyles.bodyStyle,
-                hintStyle: AppStyles.bodyStyle,
+                labelStyle: AppStyles.bodyStyle.copyWith(color: AppStyles.bodyStyle.color?.withOpacity(0.3)),
+                hintStyle: AppStyles.bodyStyle.copyWith(color: AppStyles.bodyStyle.color?.withOpacity(0.5)),
                 border: OutlineInputBorder(),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -173,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text(
                   AppLocalizations.of(context)?.translate('forget_password') ??
                       'Forget Password',
-                  style: AppStyles.bodyStyle.copyWith(color: Colors.blue),
+                  style: AppStyles.bodyStyle.copyWith(color: Colors.grey),
                 ),
               ),
             ),

@@ -23,7 +23,7 @@ dev_dependencies:
 
 flutter_icons:
   android: true
-  image_path: "assets/images/logo1.png"
+  image_path: "assets/images/main_logo.png"
 
 flutter:
   uses-material-design: true
