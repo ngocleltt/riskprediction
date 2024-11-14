@@ -4,6 +4,10 @@ import 'package:riskprediction/screens/login_screen.dart';
 import 'package:riskprediction/screens/signup_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  final Function(Locale) onLocaleChange;
+
+  WelcomeScreen({required this.onLocaleChange});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,9 +36,17 @@ class WelcomeScreen extends StatelessWidget {
             SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(onLocaleChange: onLocaleChange),
+                  ),
+                );
               },
-              child: Text('Log In', style: AppStyles.bodyStyle.copyWith(fontSize: 18, fontWeight: FontWeight.w600).copyWith(color: Colors.white)),
+              child: Text(
+                'Log In',
+                style: AppStyles.bodyStyle.copyWith(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
+              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFFFBB127),
                 elevation: 0,
@@ -47,9 +59,18 @@ class WelcomeScreen extends StatelessWidget {
             SizedBox(height: 10),
             OutlinedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SignupScreen()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SignupScreen(onLocaleChange: onLocaleChange),
+                  ),
+                );
+
               },
-              child: Text('Sign Up', style: AppStyles.bodyStyle.copyWith(fontSize: 18, fontWeight: FontWeight.w600).copyWith(color: Color(0xFFFBB127))),
+              child: Text(
+                'Sign Up',
+                style: AppStyles.bodyStyle.copyWith(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFFFBB127)),
+              ),
               style: OutlinedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),

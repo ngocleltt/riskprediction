@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
+  intl: ^0.18.1
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -27,6 +30,14 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/lang/intl_en.json
+    - assets/lang/intl_ru.json
+    - assets/lang/intl_vi.json
+    - assets/lang/intl_fr.json
+    - assets/lang/intl_de.json
+    - assets/lang/intl_zh.json
+    - assets/lang/intl_es.json
+    - assets/lang/intl_ar.json
   fonts:
     - family: League Spartan
       fonts:

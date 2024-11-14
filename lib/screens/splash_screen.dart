@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:riskprediction/screens/welcome_screen.dart';
 import 'package:riskprediction/styles/app_style.dart';
 
 class SplashScreen extends StatelessWidget {
+  final Function(Locale) onLocaleChange;
+
+  SplashScreen({required this.onLocaleChange});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFFBB127),
       body: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, '/welcome');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WelcomeScreen(onLocaleChange: onLocaleChange),
+            ),
+          );
         },
         child: Center(
           child: Column(
