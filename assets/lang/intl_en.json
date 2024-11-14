@@ -68,5 +68,15 @@
   "password": "Password",
   "forget_password": "Forget Password",
   "or_sign_up_with": "or sign up with",
-  "dont_have_account": "Don't have an account? Sign Up"
+  "dont_have_account": "Don't have an account? Sign Up",
+  "choose_language": "Choose Language",
+  "full_name": "Full name",
+  "email_or_mobile": "Email or Mobile Number",
+  "password": "Password",
+  "mobile_number": "Mobile Number",
+  "date_of_birth": "Date of Birth",
+  "sign_up": "Sign Up",
+  "already_have_account": "Already have an account? Log in",
+  "or_sign_up_with": "or sign up with",
+  "terms_of_use": "By continuing, you agree to Terms of Use and Privacy Policy."
 }

@@ -63,5 +63,15 @@
   "password": "密码",
   "forget_password": "忘记密码",
   "or_sign_up_with": "或注册使用",
-  "dont_have_account": "没有账户？注册"
+  "dont_have_account": "没有账户？注册",
+  "choose_language": "选择语言",
+  "full_name": "全名",
+  "email_or_mobile": "邮箱或手机号",
+  "password": "密码",
+  "mobile_number": "手机号",
+  "date_of_birth": "出生日期",
+  "sign_up": "注册",
+  "already_have_account": "已有账号吗? 登录",
+  "or_sign_up_with": "或者使用以下方式注册",
+  "terms_of_use": "继续使用即表示您同意用户条款和隐私政策."
 }

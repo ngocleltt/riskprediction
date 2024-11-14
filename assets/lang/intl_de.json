@@ -69,5 +69,16 @@
   "password": "Passwort",
   "forget_password": "Passwort vergessen",
   "or_sign_up_with": "oder anmelden mit",
-  "dont_have_account": "Kein Konto? Anmelden"
+  "dont_have_account": "Kein Konto? Anmelden",
+  "choose_language": "Sprache wählen",
+  "full_name": "Vollständiger Name",
+  "email_or_mobile": "E-Mail oder Telefonnummer",
+  "password": "Passwort",
+  "mobile_number": "Telefonnummer",
+  "date_of_birth": "Geburtsdatum",
+  "sign_up": "Registrieren",
+  "already_have_account": "Haben Sie bereits ein Konto? Anmelden",
+  "or_sign_up_with": "oder registrieren mit",
+  "terms_of_use": "Durch die Fortsetzung stimmen Sie den Nutzungsbedingungen und der Datenschutzrichtlinie zu."
+},
 }

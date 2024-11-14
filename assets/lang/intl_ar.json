@@ -69,5 +69,15 @@
   "password": "كلمة المرور",
   "forget_password": "نسيت كلمة المرور",
   "or_sign_up_with": "أو قم بالتسجيل باستخدام",
-  "dont_have_account": "ليس لديك حساب؟ سجل الآن"
+  "dont_have_account": "ليس لديك حساب؟ سجل الآن",
+  "choose_language": "اختر اللغة",
+  "full_name": "الاسم الكامل",
+  "email_or_mobile": "البريد الإلكتروني أو رقم الهاتف",
+  "password": "كلمة السر",
+  "mobile_number": "رقم الهاتف",
+  "date_of_birth": "تاريخ الميلاد",
+  "sign_up": "اشترك",
+  "already_have_account": "هل لديك حساب؟ تسجيل الدخول",
+  "or_sign_up_with": "أو اشترك بواسطة",
+  "terms_of_use": "باستمرارك، أنت توافق على شروط الاستخدام وسياسة الخصوصية."
 }

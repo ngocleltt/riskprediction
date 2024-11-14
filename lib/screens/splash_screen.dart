@@ -4,8 +4,9 @@ import 'package:riskprediction/styles/app_style.dart';
 
 class SplashScreen extends StatelessWidget {
   final Function(Locale) onLocaleChange;
+  final Locale currentLocale;
 
-  SplashScreen({required this.onLocaleChange});
+  SplashScreen({required this.onLocaleChange, required this.currentLocale});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,10 @@ class SplashScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => WelcomeScreen(onLocaleChange: onLocaleChange),
+              builder: (context) =>WelcomeScreen(
+                onLocaleChange: onLocaleChange,
+                currentLocale: currentLocale,
+              ),
             ),
           );
         },

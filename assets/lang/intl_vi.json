@@ -68,5 +68,15 @@
   "password": "Mật khẩu",
   "forget_password": "Quên mật khẩu",
   "or_sign_up_with": "hoặc đăng ký với",
-  "dont_have_account": "Chưa có tài khoản? Đăng ký"
+  "dont_have_account": "Chưa có tài khoản? Đăng ký",
+  "choose_language": "Chọn ngôn ngữ",
+  "full_name": "Họ và tên",
+  "email_or_mobile": "Email hoặc số điện thoại",
+  "password": "Mật khẩu",
+  "mobile_number": "Số điện thoại",
+  "date_of_birth": "Ngày sinh",
+  "sign_up": "Đăng ký",
+  "already_have_account": "Bạn đã có tài khoản? Đăng nhập",
+  "or_sign_up_with": "hoặc đăng ký bằng",
+  "terms_of_use": "Bằng cách tiếp tục, bạn đồng ý với điều khoản sử dụng và chính sách bảo mật."
 }

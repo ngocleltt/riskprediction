@@ -5,8 +5,9 @@ import 'package:riskprediction/screens/signup_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final Function(Locale) onLocaleChange;
+  final Locale currentLocale;
 
-  WelcomeScreen({required this.onLocaleChange});
+  WelcomeScreen({required this.onLocaleChange, required this.currentLocale});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,10 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => LoginScreen(onLocaleChange: onLocaleChange),
+                    builder: (context) => LoginScreen(
+                      onLocaleChange: onLocaleChange,
+                      currentLocale: currentLocale,
+                    ),
                   ),
                 );
               },
@@ -62,7 +66,10 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SignupScreen(onLocaleChange: onLocaleChange),
+                    builder: (context) =>  SignupScreen(
+                      onLocaleChange: onLocaleChange,
+                      currentLocale: currentLocale,
+                    ),
                   ),
                 );
 

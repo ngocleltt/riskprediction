@@ -52,7 +52,10 @@ class _MyAppState extends State<MyApp> {
         }
         return supportedLocales.first;
       },
-      home: SplashScreen(onLocaleChange: setLocale),
+      home: SplashScreen(
+        onLocaleChange: setLocale,
+        currentLocale: _locale,
+      ),
     );
   }
 }

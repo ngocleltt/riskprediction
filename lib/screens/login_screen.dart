@@ -3,11 +3,13 @@ import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/screens/welcome_screen.dart';
 import 'package:riskprediction/screens/signup_screen.dart';
 import 'package:riskprediction/app_localizations.dart';
+import 'package:riskprediction/widgets/language_selector.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
+  final Locale currentLocale;
 
-  LoginScreen({required this.onLocaleChange});
+  LoginScreen({required this.onLocaleChange, required this.currentLocale});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -35,7 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => WelcomeScreen(onLocaleChange: widget.onLocaleChange),
+          builder: (context) => WelcomeScreen(
+            onLocaleChange: widget.onLocaleChange,
+            currentLocale: widget.currentLocale,
+          ),
         ),
       );
     } else {
@@ -68,60 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.language, color: Colors.orange),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text(
-                      AppLocalizations.of(context)?.translate('choose_language') ??
-                          'Choose Language',
-                      style: AppStyles.subHeadingStyle,
-                    ),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          title: Text('English', style: AppStyles.upbarStyle),
-                          onTap: () => widget.onLocaleChange(Locale('en')),
-                        ),
-                        ListTile(
-                          title: Text('Русский', style: AppStyles.upbarStyle),
-                          onTap: () => widget.onLocaleChange(Locale('ru')),
-                        ),
-                        ListTile(
-                          title: Text('Tiếng Việt', style: AppStyles.upbarStyle),
-                          onTap: () => widget.onLocaleChange(Locale('vi')),
-                        ),
-                        ListTile(
-                          title: Text('Deutsch', style: AppStyles.upbarStyle),
-                          onTap: () => widget.onLocaleChange(Locale('de')),
-                        ),
-                        ListTile(
-                          title: Text('Français', style: AppStyles.upbarStyle),
-                          onTap: () => widget.onLocaleChange(Locale('fr')),
-                        ),
-                        ListTile(
-                          title: Text('عربي', style: AppStyles.upbarStyle),
-                          onTap: () => widget.onLocaleChange(Locale('ar')),
-                        ),
-                        ListTile(
-                          title: Text('中文', style: AppStyles.upbarStyle),
-                          onTap: () => widget.onLocaleChange(Locale('zh')),
-                        ),
-                        ListTile(
-                          title: Text('Español', style: AppStyles.upbarStyle),
-                          onTap: () => widget.onLocaleChange(Locale('es')),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-          ),
+          LanguageSelector(onLocaleChange: widget.onLocaleChange),
         ],
       ),
       backgroundColor: Colors.white,
@@ -221,7 +173,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SignupScreen(onLocaleChange: widget.onLocaleChange),
+                    builder: (context) => SignupScreen(
+                      onLocaleChange: widget.onLocaleChange,
+                      currentLocale: widget.currentLocale,
+                    ),
                   ),
                 );
               },
