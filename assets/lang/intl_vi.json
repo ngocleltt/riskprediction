@@ -39,7 +39,9 @@
   "home": "Trang chủ",
   "reports": "Báo cáo",
   "seasons": "Mùa",
+  "welcome_back" :"Chào mừng bạn trở lại",
   "more": "Thêm",
+  "poison" : "Chất độc",
   "history": "Lịch sử",
   "license_title": "Thỏa thuận cấp phép",
   "terms_of_service": "Điều khoản dịch vụ",
@@ -80,5 +82,6 @@
   "or_sign_up_with": "hoặc đăng ký bằng",
   "terms_of_use": "Bằng cách tiếp tục, bạn đồng ý với điều khoản sử dụng và chính sách bảo mật.",
   "risk_prediction": "Dự đoán Rủi ro",
+  "search" : "Tìm kiếm",
   "welcome_message": "Bằng cách báo cáo rủi ro, bạn đang xây dựng thế giới an toàn và tin tưởng."
 }

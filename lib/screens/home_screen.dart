@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
+import 'package:riskprediction/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
@@ -26,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Hi, Welcome Back',
+              AppLocalizations.of(context)?.translate('welcome_back') ?? 'Hi, Welcome Back',
               style: AppStyles.bodyStyle.copyWith(color: Colors.orange),
             ),
             Text(
@@ -50,7 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
             TextField(
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search, color: Colors.orange),
-                hintText: 'Search',
+                hintText: AppLocalizations.of(context)?.translate('search') ?? 'Search',
+                hintStyle: AppStyles.subbodyStyle.copyWith(color: Colors.grey.withOpacity(0.5)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: BorderSide.none,
@@ -67,20 +69,20 @@ class _HomeScreenState extends State<HomeScreen> {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               children: [
-                _buildRiskButton('Emergency', Icons.warning),
-                _buildRiskButton('Review Needed', Icons.rate_review),
-                _buildRiskButton('More Info Needed', Icons.info),
-                _buildRiskButton('Potential Risk', Icons.shield),
-                _buildRiskButton('Poison', Icons.science),
-                _buildRiskButton('Other Risks', Icons.chat),
+                _buildRiskButton(AppLocalizations.of(context)?.translate('emergency') ?? 'Emergency', Icons.warning),
+                _buildRiskButton(AppLocalizations.of(context)?.translate('review_needed') ?? 'Review Needed', Icons.rate_review),
+                _buildRiskButton(AppLocalizations.of(context)?.translate('more_info_needed') ?? 'More Info Needed', Icons.info),
+                _buildRiskButton(AppLocalizations.of(context)?.translate('potential_risk') ?? 'Potential Risk', Icons.shield),
+                _buildRiskButton(AppLocalizations.of(context)?.translate('poison') ?? 'Poison', Icons.science),
+                _buildRiskButton(AppLocalizations.of(context)?.translate('other_risks') ?? 'Other Risks', Icons.chat),
               ],
             ),
             SizedBox(height: 20),
             Row(
               children: [
-                _buildStatCard('Rating', '5'),
+                _buildStatCard(AppLocalizations.of(context)?.translate('rating') ?? 'Rating', '5'),
                 SizedBox(width: 10),
-                _buildStatCard('Points', '20'),
+                _buildStatCard(AppLocalizations.of(context)?.translate('points') ?? 'Points', '20'),
               ],
             ),
             SizedBox(height: 20),
@@ -94,12 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Dear Binh,',
-                    style: AppStyles.bodyStyle.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'We have no tasks for you to complete right now, but if you notice any danger, please let us know.',
+                    AppLocalizations.of(context)?.translate('no_tasks_description') ?? 'We have no tasks for you to complete right now, but if you notice any danger, please let us know.',
                     style: AppStyles.bodyStyle,
                   ),
                 ],
@@ -146,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Icon(icon, size: 30, color: Colors.white),
           SizedBox(height: 10),
-          Text(label, style: AppStyles.bodyStyle.copyWith(color: Colors.white)),
+          Text(label, style: AppStyles.subbodyStyle.copyWith(color: Colors.white, fontSize: 10)),
         ],
       ),
     );
