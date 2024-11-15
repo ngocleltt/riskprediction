@@ -116,6 +116,8 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onTabTapped,
+        onLocaleChange: widget.onLocaleChange,
+        currentLocale: widget.currentLocale,
       ),
     );
   }
