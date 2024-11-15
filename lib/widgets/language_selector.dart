@@ -25,35 +25,59 @@ class LanguageSelector extends StatelessWidget {
                 children: [
                   ListTile(
                     title: Text('English', style: AppStyles.upbarStyle),
-                    onTap: () => onLocaleChange(Locale('en')),
+                    onTap: () {
+                      onLocaleChange(Locale('en'));
+                      Navigator.pop(context);
+                    },
                   ),
                   ListTile(
                     title: Text('Русский', style: AppStyles.upbarStyle),
-                    onTap: () => onLocaleChange(Locale('ru')),
+                    onTap: () {
+                      onLocaleChange(Locale('ru'));
+                      Navigator.pop(context);
+                    },
                   ),
                   ListTile(
                     title: Text('Tiếng Việt', style: AppStyles.upbarStyle),
-                    onTap: () => onLocaleChange(Locale('vi')),
+                    onTap: () {
+                      onLocaleChange(Locale('vi'));
+                      Navigator.pop(context);
+                    },
                   ),
                   ListTile(
                     title: Text('Deutsch', style: AppStyles.upbarStyle),
-                    onTap: () => onLocaleChange(Locale('de')),
+                    onTap: () {
+                      onLocaleChange(Locale('de'));
+                      Navigator.pop(context);
+                    },
                   ),
                   ListTile(
                     title: Text('Français', style: AppStyles.upbarStyle),
-                    onTap: () => onLocaleChange(Locale('fr')),
+                    onTap: () {
+                      onLocaleChange(Locale('fr'));
+                      Navigator.pop(context);
+                    },
                   ),
                   ListTile(
                     title: Text('عربي', style: AppStyles.upbarStyle),
-                    onTap: () => onLocaleChange(Locale('ar')),
+                    onTap: () {
+                      onLocaleChange(Locale('ar'));
+                      Navigator.pop(context);
+                    },
                   ),
                   ListTile(
                     title: Text('中文', style: AppStyles.upbarStyle),
-                    onTap: () => onLocaleChange(Locale('zh')),
+                    onTap: () {
+                      onLocaleChange(Locale('zh'));
+                      Navigator.pop(context);
+                    },
                   ),
                   ListTile(
                     title: Text('Español', style: AppStyles.upbarStyle),
-                    onTap: () => onLocaleChange(Locale('es')),
+                    onTap: () {
+                      onLocaleChange(Locale('es'));
+                      Navigator.pop(context);
+                    },
                   ),
                 ],
               ),

@@ -79,5 +79,9 @@
   "sign_up": "S'inscrire",
   "already_have_account": "Vous avez déjà un compte? Connectez-vous",
   "or_sign_up_with": "ou inscrivez-vous avec",
-  "terms_of_use": "En continuant, vous acceptez les conditions d'utilisation et la politique de confidentialité."
+  "terms_of_use": "En continuant, vous acceptez les conditions d'utilisation et la politique de confidentialité.",
+  "risk_prediction": "Prédiction des Risques",
+  "welcome_message": "En signalant des risques, vous bâtissez une base de sécurité et de confiance.",
+  "login": "Se connecter",
+  "sign_up": "S'inscrire"
 }

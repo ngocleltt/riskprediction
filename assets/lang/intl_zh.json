@@ -73,5 +73,9 @@
   "sign_up": "注册",
   "already_have_account": "已有账号吗? 登录",
   "or_sign_up_with": "或者使用以下方式注册",
-  "terms_of_use": "继续使用即表示您同意用户条款和隐私政策."
+  "terms_of_use": "继续使用即表示您同意用户条款和隐私政策.",
+  "risk_prediction": "风险预测",
+  "welcome_message": "当您报告风险时，您正在为安全和信任奠定基础.",
+  "login": "登录",
+  "sign_up": "注册"
 }

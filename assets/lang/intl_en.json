@@ -78,5 +78,9 @@
   "sign_up": "Sign Up",
   "already_have_account": "Already have an account? Log in",
   "or_sign_up_with": "or sign up with",
-  "terms_of_use": "By continuing, you agree to Terms of Use and Privacy Policy."
+  "terms_of_use": "By continuing, you agree to Terms of Use and Privacy Policy.",
+  "risk_prediction": "Risk Prediction",
+  "welcome_message": "When you report risks, you’re building a foundation for safety and trust.",
+  "login": "Log In",
+  "sign_up": "Sign Up"
 }

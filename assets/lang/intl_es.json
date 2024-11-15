@@ -73,5 +73,9 @@
   "sign_up": "Regístrate",
   "already_have_account": "¿Ya tienes una cuenta? Inicia sesión",
   "or_sign_up_with": "o regístrate con",
-  "terms_of_use": "Al continuar, aceptas los términos de uso y la política de privacidad."
+  "terms_of_use": "Al continuar, aceptas los términos de uso y la política de privacidad.",
+  "risk_prediction": "Predicción de Riesgos",
+  "welcome_message": "Al reportar riesgos, estás construyendo una base para la seguridad y la confianza.",
+  "login": "Iniciar sesión",
+  "sign_up": "Regístrate"
 }

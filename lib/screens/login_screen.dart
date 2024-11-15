@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => WelcomeScreen(
+          builder: (context) => WelcomeScreen( //change to adminscreen
             onLocaleChange: widget.onLocaleChange,
             currentLocale: widget.currentLocale,
           ),
@@ -53,13 +53,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     }
-  }
-
-  void _changeLanguage(Locale locale) {
-    widget.onLocaleChange(locale);
-    Navigator.pop(context);
-    setState(() {
-    });
   }
 
   @override
