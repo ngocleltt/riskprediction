@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:riskprediction/screens/license.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/screens/welcome_screen.dart';
 import 'package:riskprediction/screens/signup_screen.dart';
 import 'package:riskprediction/app_localizations.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
+import 'package:riskprediction/screens/license.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
@@ -124,7 +126,17 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _login,
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LicenseScreen(
+                      onLocaleChange: widget.onLocaleChange,
+                      currentLocale: widget.currentLocale,
+                    ),
+                  ),
+                );
+              },
               child: Text(
                 AppLocalizations.of(context)?.translate('login') ?? 'Log In',
                 style: AppStyles.bodyStyle.copyWith(color: Colors.white),

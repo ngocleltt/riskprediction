@@ -25,7 +25,12 @@ class AppStyles {
 
   static const TextStyle upbarStyle = TextStyle(
     fontSize: 12,
-    color: Colors.orange,
+    color: Colors.deepOrangeAccent,
+    fontFamily: 'League Spartan',
+  );
+  static const TextStyle subbodyStyle = TextStyle(
+    fontSize: 12,
+    color: Colors.black45,
     fontFamily: 'League Spartan',
   );
 

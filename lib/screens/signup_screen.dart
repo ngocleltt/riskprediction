@@ -1,4 +1,5 @@
   import 'package:flutter/material.dart';
+import 'package:riskprediction/screens/license.dart';
   import 'package:riskprediction/styles/app_style.dart';
   import 'package:riskprediction/screens/login_screen.dart';
   import 'package:riskprediction/app_localizations.dart';
@@ -133,7 +134,17 @@
               SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LicenseScreen(
+                          onLocaleChange: widget.onLocaleChange,
+                          currentLocale: widget.currentLocale,
+                        ),
+                      ),
+                    );
+                  },
                   child: Text(AppLocalizations.of(context)?.translate('sign_up') ?? 'Sign Up', style: AppStyles.bodyStyle.copyWith(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFFBB127),
