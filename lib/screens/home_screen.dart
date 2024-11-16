@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _currentIndex = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,8 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 20),
             GridView.count(
               crossAxisCount: 3,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               children: [
@@ -135,8 +136,46 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildRiskButton(String label, IconData icon) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(
+                label,
+                style: AppStyles.headingStyle.copyWith(
+                  fontSize: 20,
+                  color: Colors.orange,
+                ),
+              ),
+              content: Text(
+                'Get 5 points reporting this risk',
+                style: AppStyles.bodyStyle.copyWith(
+                  fontSize: 16,
+                  color: Colors.black87,
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'OK',
+                    style: AppStyles.subbodyStyle.copyWith(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.orange,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
       style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
         backgroundColor: Color(0xFFFBB127),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -146,13 +185,23 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 30, color: Colors.white),
-          SizedBox(height: 10),
-          Text(label, style: AppStyles.subbodyStyle.copyWith(color: Colors.white, fontSize: 10)),
+          Icon(icon, size: 30),
+          SizedBox(height: 8),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: AppStyles.subbodyStyle.copyWith(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
         ],
       ),
     );
   }
+
+
 
   Widget _buildStatCard(String label, String value) {
     return Expanded(

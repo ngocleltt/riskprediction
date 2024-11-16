@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/app_localizations.dart';
+import 'package:riskprediction/widgets/language_selector.dart';
 
 class NotificationScreen extends StatelessWidget {
   final Function(Locale) onLocaleChange;
@@ -21,16 +22,10 @@ class NotificationScreen extends StatelessWidget {
         ),
         title: Text(
           AppLocalizations.of(context)?.translate('notification') ?? 'Notification',
-          style: AppStyles.headingStyle.copyWith(color: Colors.orange),
+          style: AppStyles.subHeadingStyle.copyWith(color: Colors.orange),
         ),
         actions: [
-          TextButton(
-            onPressed: () {},
-            child: Text(
-              AppLocalizations.of(context)?.translate('mark_all') ?? 'Mark all',
-              style: AppStyles.subbodyStyle.copyWith(color: Colors.orange),
-            ),
-          ),
+          LanguageSelector(onLocaleChange: onLocaleChange),
         ],
       ),
       body: ListView(
@@ -39,42 +34,42 @@ class NotificationScreen extends StatelessWidget {
           _buildNotificationSection(context, 'today', [
             _buildNotificationItem(
               context,
-              title: 'Report Accepted',
-              time: '2 M',
-              description: 'your report has been accepted by administrator and will soon be processed',
+              title: AppLocalizations.of(context)?.translate('report_accepted_title') ?? 'Report Accepted',
+              time: '23m',
+              description: AppLocalizations.of(context)?.translate('report_accepted_description') ?? 'your report has been accepted by administrator and will soon be processed',
               icon: Icons.event,
             ),
             _buildNotificationItem(
               context,
-              title: '"Moscow 5.0"',
-              time: '2 H',
-              description: 'conference on new generation technology safety will take place in moscow on 20.10.2024 at 20:00',
+              title: AppLocalizations.of(context)?.translate('moscow_5_title') ?? '"Moscow 5.0"',
+              time: '1h',
+              description: AppLocalizations.of(context)?.translate('moscow_5_description') ?? 'conference on new generation technology safety will take place in moscow on 20.10.2024 at 20:00',
               icon: Icons.event,
               highlighted: true,
             ),
             _buildNotificationItem(
               context,
-              title: "What's New ?",
-              time: '3 H',
-              description: "dear user, don't forget to update your recent life, no matter if it's safe or risky at the moment. we're here to help you!",
+              title: AppLocalizations.of(context)?.translate('whats_new_title') ?? "What's New ?",
+              time: '3h',
+              description: AppLocalizations.of(context)?.translate('whats_new_description') ?? "dear user, don't forget to update your recent life, no matter if it's safe or risky at the moment. we're here to help you!",
               icon: Icons.event,
             ),
           ]),
           _buildNotificationSection(context, 'yesterday', [
             _buildNotificationItem(
               context,
-              title: 'Points',
-              time: '1 D',
-              description: 'you have 20 points and can effort for some gift at the store.',
+              title: AppLocalizations.of(context)?.translate('points_title') ?? 'Points',
+              time: '1d',
+              description: AppLocalizations.of(context)?.translate('points_description') ?? 'you have 20 points and can effort for some gift at the store.',
               icon: Icons.event,
             ),
           ]),
-          _buildNotificationSection(context, '15 April', [
+          _buildNotificationSection(context, '15_april', [
             _buildNotificationItem(
               context,
-              title: 'Feedback',
-              time: '5 D',
-              description: "how do you think with the last report's respond? let us know! ^^",
+              title: AppLocalizations.of(context)?.translate('feedback_title') ?? 'Feedback',
+              time: '5d',
+              description: AppLocalizations.of(context)?.translate('feedback_description') ?? "how do you think with the last report's respond? let us know! ^^",
               icon: Icons.question_answer,
             ),
           ]),
