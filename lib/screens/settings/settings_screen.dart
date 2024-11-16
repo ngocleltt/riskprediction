@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:riskprediction/screens/settings/notification_setting.dart';
+import 'package:riskprediction/screens/settings/password_manager_screen.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 import 'package:riskprediction/app_localizations.dart';
 import 'package:riskprediction/widgets/custom_bottom_navigation_bar.dart';
-import 'package:riskprediction/screens/notification_setting.dart';
 
 class SettingsScreen extends StatelessWidget {
   final Function(Locale) onLocaleChange;
@@ -52,7 +53,15 @@ class SettingsScreen extends StatelessWidget {
               context,
               icon: Icons.vpn_key,
               labelKey: 'password_manager',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PasswordManagerScreen(
+                    onLocaleChange: onLocaleChange,
+                    currentLocale: currentLocale,
+                  )),
+                );
+              },
             ),
             Divider(),
             _buildSettingsOption(
@@ -65,7 +74,7 @@ class SettingsScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: 2,
+        currentIndex: 3,
         onTap: (index) {
           // Handle bottom navigation tap
         },

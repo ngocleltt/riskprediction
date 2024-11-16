@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riskprediction/screens/home_screen.dart';
+import 'package:riskprediction/screens/settings/settings_screen.dart';
 import 'package:riskprediction/screens/user_screen.dart';
-import 'package:riskprediction/screens/settings_screen.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 import 'package:riskprediction/app_localizations.dart';
 

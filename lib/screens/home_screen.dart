@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riskprediction/screens/notification.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 import 'package:riskprediction/app_localizations.dart';
@@ -47,7 +48,17 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: Icon(Icons.notifications_none, color: Colors.orange),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationScreen(
+                    onLocaleChange: widget.onLocaleChange,
+                    currentLocale: widget.currentLocale,
+                  ),
+                ),
+              );
+            },
           ),
           LanguageSelector(onLocaleChange: widget.onLocaleChange),
         ],

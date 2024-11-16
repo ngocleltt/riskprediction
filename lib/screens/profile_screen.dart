@@ -105,7 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: _currentIndex,
+        currentIndex: 2,
         onTap: _onTabTapped,
         onLocaleChange: widget.onLocaleChange,
         currentLocale: widget.currentLocale,
