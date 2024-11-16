@@ -142,5 +142,10 @@
   "home": "الرئيسية",
   "chat": "الدردشة",
   "profile": "الملف الشخصي",
-  "settings": "الإعدادات"
+  "settings": "الإعدادات",
+  "risk_report": "تقرير المخاطر",
+  "risk_report_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "your_picture_here": "صورتك هنا",
+  "enter_your_comment": "أدخل تعليقك هنا...",
+  "add_report": "إضافة تقرير"
 }

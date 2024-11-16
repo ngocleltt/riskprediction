@@ -140,5 +140,10 @@
   "home": "Inicio",
   "chat": "Chat",
   "profile": "Perfil",
-  "settings": "Configuración"
+  "settings": "Configuración",
+  "risk_report": "Informe de riesgos",
+  "risk_report_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "your_picture_here": "Tu foto aquí",
+  "enter_your_comment": "Ingrese su comentario aquí...",
+  "add_report": "Agregar informe"
 }

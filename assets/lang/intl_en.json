@@ -177,5 +177,10 @@
   "contact_4_title": "Facebook",
   "contact_4_info": "Visit: facebook.com/example",
   "contact_5_title": "Instagram",
-  "contact_5_info": "Follow us: @example"
+  "contact_5_info": "Follow us: @example",
+  "risk_report": "Risk Report",
+  "risk_report_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "your_picture_here": "Your picture here",
+  "enter_your_comment": "Enter Your Comment Here...",
+  "add_report": "Add Report"
 }

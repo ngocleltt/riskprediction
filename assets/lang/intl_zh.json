@@ -144,5 +144,10 @@
   "home": "主页",
   "chat": "聊天",
   "profile": "个人资料",
-  "settings": "设置"
+  "settings": "设置",
+  "risk_report": "风险报告",
+  "risk_report_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "your_picture_here": "您的图片在这里",
+  "enter_your_comment": "在此输入您的评论...",
+  "add_report": "添加报告"
 }

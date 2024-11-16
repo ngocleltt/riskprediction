@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:riskprediction/screens/home_screen.dart';
 import 'package:riskprediction/screens/settings/settings_screen.dart';
 import 'package:riskprediction/screens/user_screen.dart';
-import 'package:riskprediction/widgets/language_selector.dart';
+import 'package:riskprediction/screens/report.dart';
 import 'package:riskprediction/app_localizations.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -23,32 +23,54 @@ class CustomBottomNavigationBar extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: (index) {
-        onTap(index);
-        switch (index) {
-          case 0:
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen(onLocaleChange: onLocaleChange, currentLocale: currentLocale)),
-            );
-            break;
-          case 1:
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen(onLocaleChange: onLocaleChange, currentLocale: currentLocale)),
-            );
-            break;
-          case 2:
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => UserScreen(onLocaleChange: onLocaleChange, currentLocale: currentLocale)),
-            );
-            break;
-          case 3:
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SettingsScreen(onLocaleChange: onLocaleChange, currentLocale: currentLocale)),
-            );
-            break;
+        if (currentIndex != index) {
+          onTap(index);
+          switch (index) {
+            case 0:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                    onLocaleChange: onLocaleChange,
+                    currentLocale: currentLocale,
+                  ),
+                ),
+              );
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReportScreen(
+                    onLocaleChange: onLocaleChange,
+                    currentLocale: currentLocale,
+                  ),
+                ),
+              );
+              break;
+            case 2:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserScreen(
+                    onLocaleChange: onLocaleChange,
+                    currentLocale: currentLocale,
+                  ),
+                ),
+              );
+              break;
+            case 3:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingsScreen(
+                    onLocaleChange: onLocaleChange,
+                    currentLocale: currentLocale,
+                  ),
+                ),
+              );
+              break;
+          }
         }
       },
       selectedItemColor: Color(0xFFFBB127),
@@ -59,28 +81,28 @@ class CustomBottomNavigationBar extends StatelessWidget {
             Icons.home,
             color: currentIndex == 0 ? Color(0xFFFBB127) : Colors.grey,
           ),
-          label: '',
+          label: AppLocalizations.of(context)?.translate('home') ?? 'Home',
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.camera_alt,
+            Icons.report,
             color: currentIndex == 1 ? Color(0xFFFBB127) : Colors.grey,
           ),
-          label: '',
+          label: AppLocalizations.of(context)?.translate('report') ?? 'Report',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.person,
             color: currentIndex == 2 ? Color(0xFFFBB127) : Colors.grey,
           ),
-          label: '',
+          label: AppLocalizations.of(context)?.translate('user') ?? 'User',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.settings,
             color: currentIndex == 3 ? Color(0xFFFBB127) : Colors.grey,
           ),
-          label: '',
+          label: AppLocalizations.of(context)?.translate('settings') ?? 'Settings',
         ),
       ],
     );

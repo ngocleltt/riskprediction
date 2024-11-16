@@ -146,5 +146,10 @@
   "home": "Trang chủ",
   "chat": "Trò chuyện",
   "profile": "Hồ sơ",
-  "settings": "Cài đặt"
+  "settings": "Cài đặt",
+  "risk_report": "Báo cáo rủi ro",
+  "risk_report_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "your_picture_here": "Hình ảnh của bạn tại đây",
+  "enter_your_comment": "Nhập bình luận của bạn tại đây...",
+  "add_report": "Thêm báo cáo"
 }

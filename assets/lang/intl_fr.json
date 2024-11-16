@@ -142,5 +142,16 @@
   "home": "Accueil",
   "chat": "Discussion",
   "profile": "Profil",
-  "settings": "Paramètres"
+  "settings": "Paramètres",
+  "risk_report": "Rapport de risque",
+  "risk_report_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "your_picture_here": "Votre photo ici",
+  "enter_your_comment": "Entrez votre commentaire ici...",
+  "add_report": "Ajouter un rapport",
+  "risk_report": "Informe de riesgos",
+  "risk_report_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "your_picture_here": "Tu foto aquí",
+  "enter_your_comment": "Ingrese su comentario aquí...",
+  "add_report": "Agregar informe",
+
 }
