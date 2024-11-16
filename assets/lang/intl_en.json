@@ -97,5 +97,13 @@
   "diet": "Diet",
   "normal": "Normal",
   "vegetarian": "Vegetarian",
-  "allergy": "Allergy"
+  "allergy": "Allergy",
+  "user": "User",
+  "profile": "Profile",
+  "favorite": "Favorite",
+  "payment_method": "Payment Method",
+  "privacy_policy": "Privacy Policy",
+  "settings": "Settings",
+  "help": "Help",
+  "logout": "Logout"
 }

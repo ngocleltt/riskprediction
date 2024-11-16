@@ -13,12 +13,22 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   double _progress = 0.0;
+  late AnimationController _fadeController;
 
   @override
   void initState() {
     super.initState();
+
+    _fadeController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+
+    Timer(Duration(seconds: 4), () {
+      _fadeController.forward();
+    });
 
     Timer.periodic(Duration(milliseconds: 50), (timer) {
       if (_progress >= 1) {
@@ -32,14 +42,27 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  @override
+  void dispose() {
+    _fadeController.dispose();
+    super.dispose();
+  }
+
   void _navigateToWelcomeScreen() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(
-        builder: (context) => WelcomeScreen(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => WelcomeScreen(
           onLocaleChange: widget.onLocaleChange,
           currentLocale: widget.currentLocale,
         ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+        transitionDuration: Duration(seconds: 1),
       ),
     );
   }

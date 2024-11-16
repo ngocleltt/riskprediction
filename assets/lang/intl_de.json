@@ -95,5 +95,21 @@
   "diet": "Diät",
   "normal": "Normal",
   "vegetarian": "Vegetarisch",
-  "allergy": "Allergie"
+  "allergy": "Allergie",
+  "user": "Benutzer",
+  "profile": "Profil",
+  "favorite": "Favorit",
+  "payment_method": "Zahlungsmethode",
+  "privacy_policy": "Datenschutzbestimmungen",
+  "settings": "Einstellungen",
+  "help": "Hilfe",
+  "logout": "Abmelden",
+  "user": "المستخدم",
+  "profile": "الملف الشخصي",
+  "favorite": "المفضلة",
+  "payment_method": "طريقة الدفع",
+  "privacy_policy": "سياسة الخصوصية",
+  "settings": "الإعدادات",
+  "help": "مساعدة",
+  "logout": "تسجيل الخروج"
 }

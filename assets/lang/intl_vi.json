@@ -95,5 +95,13 @@
   "diet": "Chế độ ăn",
   "normal": "Bình thường",
   "vegetarian": "Ăn chay",
-  "allergy": "Dị ứng"
+  "allergy": "Dị ứng",
+  "user": "Người dùng",
+  "profile": "Hồ sơ",
+  "favorite": "Yêu thích",
+  "payment_method": "Phương thức thanh toán",
+  "privacy_policy": "Chính sách bảo mật",
+  "settings": "Cài đặt",
+  "help": "Trợ giúp",
+  "logout": "Đăng xuất"
 }

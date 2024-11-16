@@ -35,8 +35,8 @@ class _UserScreenState extends State<UserScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'User',
-          style: AppStyles.headingStyle.copyWith(color: Colors.orange),
+          AppLocalizations.of(context)?.translate('user') ?? '',
+          style: AppStyles.subHeadingStyle.copyWith(color: Colors.orange),
         ),
         actions: [
           LanguageSelector(onLocaleChange: widget.onLocaleChange),
@@ -60,13 +60,13 @@ class _UserScreenState extends State<UserScreen> {
             Expanded(
               child: ListView(
                 children: [
-                  _buildUserOption(context, Icons.person, 'Profile'),
-                  _buildUserOption(context, Icons.favorite, 'Favorite'),
-                  _buildUserOption(context, Icons.payment, 'Payment Method'),
-                  _buildUserOption(context, Icons.privacy_tip, 'Privacy Policy'),
-                  _buildUserOption(context, Icons.settings, 'Settings'),
-                  _buildUserOption(context, Icons.help_outline, 'Help'),
-                  _buildUserOption(context, Icons.logout, 'Logout'),
+                  _buildUserOption(context, Icons.person, AppLocalizations.of(context)?.translate('profile') ?? ''),
+                  _buildUserOption(context, Icons.favorite, AppLocalizations.of(context)?.translate('favorite') ?? ''),
+                  _buildUserOption(context, Icons.payment, AppLocalizations.of(context)?.translate('payment_method') ?? ''),
+                  _buildUserOption(context, Icons.privacy_tip, AppLocalizations.of(context)?.translate('privacy_policy') ?? ''),
+                  _buildUserOption(context, Icons.settings, AppLocalizations.of(context)?.translate('settings') ?? ''),
+                  _buildUserOption(context, Icons.help_outline, AppLocalizations.of(context)?.translate('help') ?? ''),
+                  _buildUserOption(context, Icons.logout, AppLocalizations.of(context)?.translate('logout') ?? ''),
                 ],
               ),
             ),
@@ -94,11 +94,11 @@ class _UserScreenState extends State<UserScreen> {
       ),
       title: Text(
         title,
-        style: AppStyles.bodyStyle.copyWith(color : Color(0xFFFBB127), fontSize: 16, fontWeight: FontWeight.w600),
+        style: AppStyles.bodyStyle.copyWith(color: Color(0xFFFBB127), fontSize: 16, fontWeight: FontWeight.w600),
       ),
       trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey),
       onTap: () {
-        if (title == 'Profile') {
+        if (title == AppLocalizations.of(context)?.translate('profile')) {
           Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(
             onLocaleChange: widget.onLocaleChange,
             currentLocale: widget.currentLocale,

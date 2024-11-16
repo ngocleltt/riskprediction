@@ -89,5 +89,13 @@
   "diet": "饮食",
   "normal": "正常",
   "vegetarian": "素食",
-  "allergy": "过敏"
+  "allergy": "过敏",
+  "user": "用户",
+  "profile": "个人资料",
+  "favorite": "收藏夹",
+  "payment_method": "付款方式",
+  "privacy_policy": "隐私政策",
+  "settings": "设置",
+  "help": "帮助",
+  "logout": "登出"
 }
