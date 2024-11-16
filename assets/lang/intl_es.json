@@ -77,5 +77,17 @@
   "risk_prediction": "Predicción de Riesgos",
   "welcome_message": "Al reportar riesgos, estás construyendo una base para la seguridad y la confianza.",
   "login": "Iniciar sesión",
-  "sign_up": "Regístrate"
+  "sign_up": "Regístrate",
+  "profile": "Perfil",
+  "full_name": "Nombre completo",
+  "phone_number": "Número de teléfono",
+  "email": "Correo electrónico",
+  "date_of_birth": "Fecha de nacimiento",
+  "bio": "Biografía",
+  "write_bio": "Escribe una breve biografía aquí...",
+  "update_profile": "Actualizar perfil",
+  "diet": "Dieta",
+  "normal": "Normal",
+  "vegetarian": "Vegetariano",
+  "allergy": "Alergia"
 }

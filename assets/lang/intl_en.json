@@ -85,5 +85,17 @@
   "login": "Log In",
   "search" : "Search",
   "welcome_back" :"Welcome back",
-  "sign_up": "Sign Up"
+  "sign_up": "Sign Up",
+  "profile": "Profile",
+  "full_name": "Full Name",
+  "phone_number": "Phone Number",
+  "email": "Email",
+  "date_of_birth": "Date Of Birth",
+  "bio": "Bio",
+  "write_bio": "Write a short bio here...",
+  "update_profile": "Update Profile",
+  "diet": "Diet",
+  "normal": "Normal",
+  "vegetarian": "Vegetarian",
+  "allergy": "Allergy"
 }

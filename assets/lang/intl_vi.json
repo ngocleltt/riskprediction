@@ -83,5 +83,17 @@
   "terms_of_use": "Bằng cách tiếp tục, bạn đồng ý với điều khoản sử dụng và chính sách bảo mật.",
   "risk_prediction": "Dự đoán Rủi ro",
   "search" : "Tìm kiếm",
-  "welcome_message": "Bằng cách báo cáo rủi ro, bạn đang xây dựng thế giới an toàn và tin tưởng."
+  "welcome_message": "Bằng cách báo cáo rủi ro, bạn đang xây dựng thế giới an toàn và tin tưởng.",
+  "profile": "Hồ sơ",
+  "full_name": "Họ và tên",
+  "phone_number": "Số điện thoại",
+  "email": "Email",
+  "date_of_birth": "Ngày sinh",
+  "bio": "Tiểu sử",
+  "write_bio": "Viết một đoạn tiểu sử ngắn ở đây...",
+  "update_profile": "Cập nhật hồ sơ",
+  "diet": "Chế độ ăn",
+  "normal": "Bình thường",
+  "vegetarian": "Ăn chay",
+  "allergy": "Dị ứng"
 }

@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Profile',
+          AppLocalizations.of(context)?.translate('profile') ?? '',
           style: AppStyles.subHeadingStyle.copyWith(color: Colors.white),
         ),
         actions: [
@@ -74,17 +74,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             SizedBox(height: 20),
-            _buildEditableProfileField('Full Name', 'Huynh Tran An Binh'),
+            _buildEditableProfileField(AppLocalizations.of(context)?.translate('full_name') ?? '', 'Huynh Tran An Binh'),
             SizedBox(height: 10),
-            _buildEditableProfileField('Phone Number', '+123 567 89000'),
+            _buildEditableProfileField(AppLocalizations.of(context)?.translate('phone_number') ?? '', '+123 567 89000'),
             SizedBox(height: 10),
-            _buildEditableProfileField('Email', 'anbinh@example.com'),
+            _buildEditableProfileField(AppLocalizations.of(context)?.translate('email') ?? '', 'anbinh@example.com'),
             SizedBox(height: 10),
-            _buildEditableProfileField('Date Of Birth', 'DD / MM / YYYY'),
+            _buildEditableProfileField(AppLocalizations.of(context)?.translate('date_of_birth') ?? '', 'DD / MM / YYYY'),
             SizedBox(height: 20),
             _buildDietOptions(),
             SizedBox(height: 20),
-            _buildEditableProfileField('Bio', 'Write a short bio here...', maxLines: 5),
+            _buildEditableProfileField(AppLocalizations.of(context)?.translate('bio') ?? '', AppLocalizations.of(context)?.translate('write_bio') ?? '', maxLines: 5),
             SizedBox(height: 30),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -95,11 +95,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
               ),
               onPressed: () {
-                // Add functionality to update profile
               },
               child: Text(
-                'Update Profile',
-                style: AppStyles.bodyStyle,
+                AppLocalizations.of(context)?.translate('update_profile') ?? '',
+                style: AppStyles.bodyStyle.copyWith(color: Colors.white),
               ),
             ),
           ],
@@ -146,25 +145,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Diet',
+          AppLocalizations.of(context)?.translate('diet') ?? '',
           style: AppStyles.subHeadingStyle.copyWith(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 10),
         Column(
           children: [
-            _buildDietOption('Normal', isNormalDiet, (value) {
+            _buildDietOption(AppLocalizations.of(context)?.translate('normal') ?? '', isNormalDiet, (value) {
               setState(() {
                 isNormalDiet = value;
               });
             }),
             SizedBox(height: 10),
-            _buildDietOption('Vegetarian', isVegetarianDiet, (value) {
+            _buildDietOption(AppLocalizations.of(context)?.translate('vegetarian') ?? '', isVegetarianDiet, (value) {
               setState(() {
                 isVegetarianDiet = value;
               });
             }),
             SizedBox(height: 10),
-            _buildDietOption('Allergy', isAllergyDiet, (value) {
+            _buildDietOption(AppLocalizations.of(context)?.translate('allergy') ?? '', isAllergyDiet, (value) {
               setState(() {
                 isAllergyDiet = value;
               });
