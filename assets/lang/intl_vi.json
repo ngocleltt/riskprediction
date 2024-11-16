@@ -103,5 +103,9 @@
   "privacy_policy": "Chính sách bảo mật",
   "settings": "Cài đặt",
   "help": "Trợ giúp",
-  "logout": "Đăng xuất"
+  "logout": "Đăng xuất",
+  "settings": "Cài đặt",
+  "notification_setting": "Cài đặt thông báo",
+  "password_manager": "Quản lý mật khẩu",
+  "delete_account": "Xóa tài khoản"
 }

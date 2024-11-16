@@ -96,5 +96,12 @@
   "normal": "عادي",
   "vegetarian": "نباتي",
   "allergy": "حساسية",
-
+  "user": "المستخدم",
+  "profile": "الملف الشخصي",
+  "favorite": "المفضلة",
+  "payment_method": "طريقة الدفع",
+  "privacy_policy": "سياسة الخصوصية",
+  "settings": "الإعدادات",
+  "help": "مساعدة",
+  "logout": "تسجيل الخروج"
 }

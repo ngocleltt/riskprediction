@@ -97,5 +97,9 @@
   "privacy_policy": "Política de privacidad",
   "settings": "Configuraciones",
   "help": "Ayuda",
-  "logout": "Cerrar sesión"
+  "logout": "Cerrar sesión",
+  "settings": "Configuraciones",
+  "notification_setting": "Configuración de notificaciones",
+  "password_manager": "Gestor de contraseñas",
+  "delete_account": "Eliminar cuenta"
 }

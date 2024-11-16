@@ -91,5 +91,10 @@
   "privacy_policy": "Политика конфиденциальности",
   "settings": "Настройки",
   "help": "Помощь",
-  "logout": "Выйти"
+  "logout": "Выйти",
+  "settings": "Настройки",
+  "notification_setting": "Настройка уведомлений",
+  "password_manager": "Менеджер паролей",
+  "delete_account": "Удалить аккаунт"
+
 }

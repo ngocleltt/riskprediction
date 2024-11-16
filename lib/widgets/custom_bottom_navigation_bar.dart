@@ -26,25 +26,25 @@ class CustomBottomNavigationBar extends StatelessWidget {
         onTap(index);
         switch (index) {
           case 0:
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen(onLocaleChange: onLocaleChange, currentLocale: currentLocale)),
             );
             break;
           case 1:
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen(onLocaleChange: onLocaleChange, currentLocale: currentLocale)),
             );
             break;
           case 2:
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => UserScreen(onLocaleChange: onLocaleChange, currentLocale: currentLocale)),
             );
             break;
           case 3:
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SettingsScreen(onLocaleChange: onLocaleChange, currentLocale: currentLocale)),
             );

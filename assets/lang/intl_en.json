@@ -105,5 +105,9 @@
   "privacy_policy": "Privacy Policy",
   "settings": "Settings",
   "help": "Help",
-  "logout": "Logout"
+  "logout": "Logout",
+  "settings": "Settings",
+  "notification_setting": "Notification Setting",
+  "password_manager": "Password Manager",
+  "delete_account": "Delete Account"
 }

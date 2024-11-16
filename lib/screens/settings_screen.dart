@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 import 'package:riskprediction/app_localizations.dart';
+import 'package:riskprediction/widgets/custom_bottom_navigation_bar.dart';
 
 class SettingsScreen extends StatelessWidget {
   final Function(Locale) onLocaleChange;
@@ -15,7 +16,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)?.translate('settings') ?? 'Settings',
-          style: AppStyles.headingStyle.copyWith(color: Colors.orange),
+          style: AppStyles.subHeadingStyle.copyWith(color: Colors.orange),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -53,6 +54,14 @@ class SettingsScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: 2,
+        onTap: (index) {
+          // Handle bottom navigation tap
+        },
+        onLocaleChange: onLocaleChange,
+        currentLocale: currentLocale,
       ),
     );
   }
