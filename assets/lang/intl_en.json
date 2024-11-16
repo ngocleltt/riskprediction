@@ -109,5 +109,14 @@
   "settings": "Settings",
   "notification_setting": "Notification Setting",
   "password_manager": "Password Manager",
-  "delete_account": "Delete Account"
+  "delete_account": "Delete Account",
+  "notification_setting": "Notification Setting",
+  "general_notification": "General Notification",
+  "sound": "Sound",
+  "sound_call": "Sound Call",
+  "vibrate": "Vibrate",
+  "special_offers": "Special Offers",
+  "payments": "Payments",
+  "promo_and_discount": "Promo And Discount",
+  "cashback": "Cashback"
 }

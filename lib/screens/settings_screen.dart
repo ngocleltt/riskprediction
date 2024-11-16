@@ -3,6 +3,7 @@ import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 import 'package:riskprediction/app_localizations.dart';
 import 'package:riskprediction/widgets/custom_bottom_navigation_bar.dart';
+import 'package:riskprediction/screens/notification_setting.dart';
 
 class SettingsScreen extends StatelessWidget {
   final Function(Locale) onLocaleChange;
@@ -36,7 +37,15 @@ class SettingsScreen extends StatelessWidget {
               context,
               icon: Icons.notifications,
               labelKey: 'notification_setting',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NotificationSettingScreen(
+                    onLocaleChange: onLocaleChange,
+                    currentLocale: currentLocale,
+                  )),
+                );
+              },
             ),
             Divider(),
             _buildSettingsOption(

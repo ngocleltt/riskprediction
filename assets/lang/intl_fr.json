@@ -104,4 +104,13 @@
   "settings": "Paramètres",
   "help": "Aide",
   "logout": "Se déconnecter",
+  "notification_setting": "Paramètres de notification",
+  "general_notification": "Notification générale",
+  "sound": "Son",
+  "sound_call": "Son d'appel",
+  "vibrate": "Vibrer",
+  "special_offers": "Offres spéciales",
+  "payments": "Paiements",
+  "promo_and_discount": "Promo et réduction",
+  "cashback": "Remboursement"
 }

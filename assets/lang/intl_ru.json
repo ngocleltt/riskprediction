@@ -95,6 +95,14 @@
   "settings": "Настройки",
   "notification_setting": "Настройка уведомлений",
   "password_manager": "Менеджер паролей",
-  "delete_account": "Удалить аккаунт"
-
+  "delete_account": "Удалить аккаунт",
+  "notification_setting": "Настройки уведомлений",
+  "general_notification": "Общие уведомления",
+  "sound": "Звук",
+  "sound_call": "Звук звонка",
+  "vibrate": "Вибрация",
+  "special_offers": "Специальные предложения",
+  "payments": "Платежи",
+  "promo_and_discount": "Промо и скидки",
+  "cashback": "Кэшбэк"
 }

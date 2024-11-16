@@ -105,5 +105,14 @@
   "privacy_policy": "隐私政策",
   "settings": "设置",
   "help": "帮助",
-  "logout": "登出"
+  "logout": "登出",
+  "notification_setting": "通知设置",
+  "general_notification": "一般通知",
+  "sound": "声音",
+  "sound_call": "通话声音",
+  "vibrate": "振动",
+  "special_offers": "特别优惠",
+  "payments": "付款",
+  "promo_and_discount": "促销和折扣",
+  "cashback": "返现"
 }

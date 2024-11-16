@@ -107,5 +107,14 @@
   "settings": "Cài đặt",
   "notification_setting": "Cài đặt thông báo",
   "password_manager": "Quản lý mật khẩu",
-  "delete_account": "Xóa tài khoản"
+  "delete_account": "Xóa tài khoản",
+  "notification_setting": "Cài đặt thông báo",
+  "general_notification": "Thông báo chung",
+  "sound": "Âm thanh",
+  "sound_call": "Âm cuộc gọi",
+  "vibrate": "Rung",
+  "special_offers": "Ưu đãi đặc biệt",
+  "payments": "Thanh toán",
+  "promo_and_discount": "Khuyến mãi và giảm giá",
+  "cashback": "Hoàn tiền"
 }

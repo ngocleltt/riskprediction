@@ -107,5 +107,14 @@
   "settings": "Einstellungen",
   "notification_setting": "Benachrichtigungseinstellung",
   "password_manager": "Passwort-Manager",
-  "delete_account": "Konto löschen"
+  "delete_account": "Konto löschen",
+  "notification_setting": "Benachrichtigungseinstellungen",
+  "general_notification": "Allgemeine Benachrichtigung",
+  "sound": "Ton",
+  "sound_call": "Anrufklingelton",
+  "vibrate": "Vibrieren",
+  "special_offers": "Sonderangebote",
+  "payments": "Zahlungen",
+  "promo_and_discount": "Aktionen und Rabatte",
+  "cashback": "Casebake"
 }

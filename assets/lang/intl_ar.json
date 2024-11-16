@@ -103,5 +103,14 @@
   "privacy_policy": "سياسة الخصوصية",
   "settings": "الإعدادات",
   "help": "مساعدة",
-  "logout": "تسجيل الخروج"
+  "logout": "تسجيل الخروج",
+  "notification_setting": "إعدادات الإشعارات",
+  "general_notification": "الإشعار العام",
+  "sound": "الصوت",
+  "sound_call": "صوت المكالمة",
+  "vibrate": "اهتزاز",
+  "special_offers": "عروض خاصة",
+  "payments": "المدفوعات",
+  "promo_and_discount": "العروض والخصومات",
+  "cashback": "استرداد النقود"
 }

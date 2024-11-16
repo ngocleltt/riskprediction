@@ -101,5 +101,14 @@
   "settings": "Configuraciones",
   "notification_setting": "Configuración de notificaciones",
   "password_manager": "Gestor de contraseñas",
-  "delete_account": "Eliminar cuenta"
+  "delete_account": "Eliminar cuenta",
+  "notification_setting": "Configuración de notificaciones",
+  "general_notification": "Notificación general",
+  "sound": "Sonido",
+  "sound_call": "Sonido de llamada",
+  "vibrate": "Vibrar",
+  "special_offers": "Ofertas especiales",
+  "payments": "Pagos",
+  "promo_and_discount": "Promociones y descuentos",
+  "cashback": "Reembolso"
 }
