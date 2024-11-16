@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riskprediction/screens/profile_screen.dart';
 import 'package:riskprediction/screens/splash_screen.dart';
 import 'app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

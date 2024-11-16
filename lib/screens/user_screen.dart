@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riskprediction/screens/profile_screen.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/custom_bottom_navigation_bar.dart';
 import 'package:riskprediction/app_localizations.dart';
@@ -86,7 +87,7 @@ class _UserScreenState extends State<UserScreen> {
       leading: Container(
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.blueAccent,
+          color: Colors.orangeAccent[10],
           borderRadius: BorderRadius.circular(10),
         ),
         child: Icon(icon, color: Color(0xFFFBB127)),
@@ -97,6 +98,12 @@ class _UserScreenState extends State<UserScreen> {
       ),
       trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey),
       onTap: () {
+        if (title == 'Profile') {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(
+            onLocaleChange: widget.onLocaleChange,
+            currentLocale: widget.currentLocale,
+          )));
+        }
       },
     );
   }
