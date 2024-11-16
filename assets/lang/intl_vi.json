@@ -137,5 +137,14 @@
   "points_title": "Điểm số",
   "points_description": "bạn có 20 điểm và có thể dùng để đổi một số quà tặng tại cửa hàng.",
   "feedback_title": "Phản hồi",
-  "feedback_description": "bạn nghĩ gì về phản hồi của báo cáo cuối cùng? cho chúng tôi biết nhé! ^^"
+  "feedback_description": "bạn nghĩ gì về phản hồi của báo cáo cuối cùng? cho chúng tôi biết nhé! ^^",
+  "store": "Cửa hàng",
+  "you_have": "Bạn có ",
+  "points": "điểm!",
+  "points_required": "Điểm",
+  "get": "Nhận",
+  "home": "Trang chủ",
+  "chat": "Trò chuyện",
+  "profile": "Hồ sơ",
+  "settings": "Cài đặt"
 }

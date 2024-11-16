@@ -139,5 +139,14 @@
   "points_title": "Points",
   "points_description": "you have 20 points and can effort for some gift at the store.",
   "feedback_title": "Feedback",
-  "feedback_description": "how do you think with the last report's respond? let us know! ^^"
+  "feedback_description": "how do you think with the last report's respond? let us know! ^^",
+  "store": "Store",
+  "you_have": "You have ",
+  "points": "Points",
+  "points_required": "5 Points",
+  "get": "Get",
+  "home": "Home",
+  "chat": "Chat",
+  "profile": "Profile",
+  "settings": "Settings"
 }

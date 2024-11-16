@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riskprediction/screens/notification.dart';
+import 'package:riskprediction/screens/store_screen.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 import 'package:riskprediction/app_localizations.dart';
@@ -100,11 +101,32 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 20),
             Row(
               children: [
-                _buildStatCard(AppLocalizations.of(context)?.translate('rating') ?? 'Rating', '5'),
+                _buildStatCard(
+                  AppLocalizations.of(context)?.translate('rating') ?? 'Rating',
+                  '5',
+                      () {
+                    // Hành động khi nhấn vào "Rating"
+                  },
+                ),
                 SizedBox(width: 10),
-                _buildStatCard(AppLocalizations.of(context)?.translate('points') ?? 'Points', '20'),
+                _buildStatCard(
+                  AppLocalizations.of(context)?.translate('points') ?? 'Points',
+                  '20',
+                      () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StoreScreen(
+                          onLocaleChange: widget.onLocaleChange,
+                          currentLocale: widget.currentLocale,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
+
             SizedBox(height: 20),
             Container(
               padding: EdgeInsets.all(16),
@@ -202,29 +224,32 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
-
-  Widget _buildStatCard(String label, String value) {
+  Widget _buildStatCard(String label, String value, VoidCallback onTap) {
     return Expanded(
-      child: Container(
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.orange[100],
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          children: [
-            Text(
-              label,
-              style: AppStyles.bodyStyle.copyWith(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              value,
-              style: AppStyles.headingStyle.copyWith(color: Colors.orange),
-            ),
-          ],
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.orange[100],
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
+              Text(
+                label,
+                style: AppStyles.bodyStyle.copyWith(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Text(
+                value,
+                style: AppStyles.headingStyle.copyWith(color: Colors.orange),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
 }

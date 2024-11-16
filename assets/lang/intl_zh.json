@@ -135,5 +135,14 @@
   "points_title": "积分",
   "points_description": "您有20积分，并可以送来默形提给的礼物",
   "feedback_title": "反馈",
-  "feedback_description": "您怎样看待最后的返回，请告诉我们！ ^^"
+  "feedback_description": "您怎样看待最后的返回，请告诉我们！ ^^",
+  "store": "商店",
+  "you_have": "你有 ",
+  "points": "积分!",
+  "points_required": "积分",
+  "get": "获取",
+  "home": "主页",
+  "chat": "聊天",
+  "profile": "个人资料",
+  "settings": "设置"
 }

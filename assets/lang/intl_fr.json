@@ -133,5 +133,14 @@
   "points_title": "Points",
   "points_description": "vous avez 20 points et pouvez les utiliser pour obtenir un cadeau en magasin.",
   "feedback_title": "Retour",
-  "feedback_description": "Que pensez-vous de la dernière réponse au rapport ? Faites-le nous savoir ! ^^"
+  "feedback_description": "Que pensez-vous de la dernière réponse au rapport ? Faites-le nous savoir ! ^^",
+  "store": "Boutique",
+  "you_have": "Vous avez ",
+  "points": "points!",
+  "points_required": "Points",
+  "get": "Obtenir",
+  "home": "Accueil",
+  "chat": "Discussion",
+  "profile": "Profil",
+  "settings": "Paramètres"
 }

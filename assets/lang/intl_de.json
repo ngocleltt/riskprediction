@@ -137,5 +137,14 @@
   "points_title": "Punkte",
   "points_description": "Sie haben 20 Punkte und können sich damit ein Geschenk im Laden leisten.",
   "feedback_title": "Feedback",
-  "feedback_description": "Was halten Sie von der letzten Antwort auf den Bericht? Lassen Sie es uns wissen! ^^"
+  "feedback_description": "Was halten Sie von der letzten Antwort auf den Bericht? Lassen Sie es uns wissen! ^^",
+  "store": "Geschäft",
+  "you_have": "Sie haben ",
+  "points": "Punkte!",
+  "points_required": "Punkte",
+  "get": "Holen",
+  "home": "Startseite",
+  "chat": "Chat",
+  "profile": "Profil",
+  "settings": "Einstellungen"
 }
