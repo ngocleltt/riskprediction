@@ -189,5 +189,12 @@
   "potential_risk": "Rủi ro tiềm ẩn",
   "poison": "Ngộ độc",
   "other_risks": "Các rủi ro khác",
-  "please_select_risk_type": "Vui lòng chọn loại rủi ro."
+  "please_select_risk_type": "Vui lòng chọn loại rủi ro.",
+  "congratulation": "Chúc mừng",
+  "report_successfully": "Báo cáo thành công",
+  "upload_success": "Bạn đã tải lên thành công một báo cáo vào hệ thống",
+  "home": "Trang chủ",
+  "report": "Báo cáo",
+  "user": "Người dùng",
+  "settings": "Cài đặt"
 }

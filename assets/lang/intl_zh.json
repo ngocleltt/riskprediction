@@ -187,5 +187,12 @@
   "potential_risk": "潜在风险",
   "poison": "中毒",
   "other_risks": "其他风险",
-  "please_select_risk_type": "请选择风险类型。"
+  "please_select_risk_type": "请选择风险类型。",
+  "congratulation": "恭喜",
+  "report_successfully": "报告提交成功",
+  "upload_success": "您已成功上传报告到系统",
+  "home": "首页",
+  "report": "报告",
+  "user": "用户",
+  "settings": "设置"
 }

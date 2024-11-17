@@ -177,5 +177,12 @@
   "potential_risk": "Потенциальный риск",
   "poison": "Отравление",
   "other_risks": "Другие риски",
-  "please_select_risk_type": "Пожалуйста, выберите тип риска."
+  "please_select_risk_type": "Пожалуйста, выберите тип риска.",
+  "congratulation": "Поздравляем",
+  "report_successfully": "Отчет успешно добавлен",
+  "upload_success": "Вы успешно загрузили отчет в систему",
+  "home": "Главная",
+  "report": "Сообщить",
+  "user": "Пользователь",
+  "settings": "Настройки"
 }

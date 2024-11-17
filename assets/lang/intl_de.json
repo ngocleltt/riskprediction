@@ -189,5 +189,12 @@
   "potential_risk": "Potentielles Risiko",
   "poison": "Vergiftung",
   "other_risks": "Andere Risiken",
-  "please_select_risk_type": "Bitte wählen Sie einen Risikotyp aus."
+  "please_select_risk_type": "Bitte wählen Sie einen Risikotyp aus.",
+  "congratulation": "Herzlichen Glückwunsch",
+  "report_successfully": "Bericht erfolgreich übermittelt",
+  "upload_success": "Sie haben erfolgreich einen Bericht ins System hochgeladen",
+  "home": "Startseite",
+  "report": "Bericht",
+  "user": "Benutzer",
+  "settings": "Einstellungen"
 }

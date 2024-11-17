@@ -18,7 +18,7 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
-  int _currentIndex = 0;
+  int _currentIndex = 2;
 
   void _onTabTapped(int index) {
     setState(() {

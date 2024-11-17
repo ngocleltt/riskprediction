@@ -185,5 +185,12 @@
   "potential_risk": "خطر محتمل",
   "poison": "تسمم",
   "other_risks": "مخاطر أخرى",
-  "please_select_risk_type": "يرجى اختيار نوع الخطر."
+  "please_select_risk_type": "يرجى اختيار نوع الخطر.",
+  "congratulation": "تهانينا",
+  "report_successfully": "تم إرسال التقرير بنجاح",
+  "upload_success": "لقد قمت بتحميل تقرير بنجاح إلى النظام",
+  "home": "الرئيسية",
+  "report": "تقرير",
+  "user": "المستخدم",
+  "settings": "الإعدادات"
 }

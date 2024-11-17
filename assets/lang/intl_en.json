@@ -220,5 +220,12 @@
   "potential_risk": "Potential Risk",
   "poison": "Poison",
   "other_risks": "Other Risks",
-  "please_select_risk_type": "Please select a risk type."
+  "please_select_risk_type": "Please select a risk type.",
+  "congratulation": "Congratulation",
+  "report_successfully": "Report is successfully",
+  "upload_success": "You have successfully uploaded a report to system",
+  "home": "Home",
+  "report": "Report",
+  "user": "User",
+  "settings": "Settings"
 }

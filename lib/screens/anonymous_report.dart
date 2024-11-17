@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:riskprediction/app_localizations.dart';
+import 'package:riskprediction/screens/submit_success.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 import 'package:riskprediction/widgets/custom_bottom_navigation_bar.dart';
@@ -238,13 +239,26 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
                   if (_selectedRiskType == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Please select a risk type.'),
+                        content: Text(
+                          AppLocalizations.of(context)?.translate('please_select_risk_type') ?? 'Please select a risk type.',
+                        ),
                         backgroundColor: Colors.red,
                       ),
                     );
                     return;
                   }
+
                   print('Anonymous report submitted with risk type: $_selectedRiskType');
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SubmitSuccessScreen(
+                        onLocaleChange: widget.onLocaleChange,
+                        currentLocale: widget.currentLocale,
+                      ),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFFBB127),
@@ -257,7 +271,8 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
                   AppLocalizations.of(context)?.translate('add_report') ?? 'Add Report',
                   style: AppStyles.bodyStyle.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-              ),
+              )
+
             ],
           ),
         ),
