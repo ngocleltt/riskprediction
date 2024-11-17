@@ -6,22 +6,31 @@ import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 import 'package:riskprediction/widgets/custom_bottom_navigation_bar.dart';
 
-class SubmitReportScreen extends StatefulWidget {
+class AnonymousReportScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
   final Locale currentLocale;
 
-  SubmitReportScreen({
+  AnonymousReportScreen({
     required this.onLocaleChange,
     required this.currentLocale,
   });
 
   @override
-  _SubmitReportScreenState createState() => _SubmitReportScreenState();
+  _AnonymousReportScreenState createState() => _AnonymousReportScreenState();
 }
 
-class _SubmitReportScreenState extends State<SubmitReportScreen> {
-  int _selectedStars = 0;
+class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
   File? _selectedImage;
+  String? _selectedRiskType;
+
+  final List<String> _riskTypes = [
+    "Emergency",
+    "Review Needed",
+    "More Info Needed",
+    "Potential Risk",
+    "Poison",
+    "Other Risks",
+  ];
 
   Future<void> _pickImageFromGallery() async {
     final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -133,7 +142,7 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          AppLocalizations.of(context)?.translate('risk_report') ?? 'Risk Report',
+          AppLocalizations.of(context)?.translate('anonymous_report') ?? 'Anonymous Report',
           style: AppStyles.subHeadingStyle.copyWith(color: Colors.white),
         ),
         actions: [
@@ -145,16 +154,14 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              // Dòng mô tả
               Text(
-                AppLocalizations.of(context)?.translate('risk_report_description') ??
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                AppLocalizations.of(context)?.translate('anonymous_report_description') ??
+                    'Your name and personal information will be kept confidential from everyone.',
                 textAlign: TextAlign.center,
                 style: AppStyles.subbodyStyle.copyWith(fontSize: 16, color: Colors.black54),
               ),
               SizedBox(height: 20),
 
-              // Hình ảnh
               GestureDetector(
                 onTap: _showImageSourceDialog,
                 child: Container(
@@ -179,41 +186,35 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
               ),
               SizedBox(height: 10),
 
-              // Dòng chữ "Your picture here"
               Text(
                 AppLocalizations.of(context)?.translate('your_picture_here') ?? 'Your picture here',
                 style: AppStyles.bodyStyle.copyWith(fontWeight: FontWeight.bold, color: Color(0xFFFBB127)),
               ),
               SizedBox(height: 20),
 
-              // Đánh giá sao
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  5,
-                      (index) => IconButton(
-                    icon: Icon(
-                      index < _selectedStars ? Icons.star : Icons.star_border,
-                      color: Colors.amber,
-                      size: 30,
+              Column(
+                children: _riskTypes.map((type) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: RadioListTile<String>(
+                      value: type,
+                      groupValue: _selectedRiskType,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedRiskType = value;
+                        });
+                      },
+                      title: Text(
+                        type,
+                        style: AppStyles.bodyStyle.copyWith(color: Colors.black87),
+                      ),
+                      activeColor: Color(0xFFFBB127),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _selectedStars = index + 1;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-
-              Text(
-                AppLocalizations.of(context)?.translate('your_rating') ?? 'Your Rating: $_selectedStars Stars',
-                style: AppStyles.bodyStyle.copyWith(fontWeight: FontWeight.bold, color: Colors.black87),
+                  );
+                }).toList(),
               ),
               SizedBox(height: 20),
 
-              // Hộp nhập bình luận
               Container(
                 decoration: BoxDecoration(
                   color: Colors.grey[100],
@@ -232,11 +233,18 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
               ),
               SizedBox(height: 30),
 
-              // Nút Add Report
               ElevatedButton(
                 onPressed: () {
-                  print('Add Report button pressed');
-                  print('Selected stars: $_selectedStars');
+                  if (_selectedRiskType == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Please select a risk type.'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+                  print('Anonymous report submitted with risk type: $_selectedRiskType');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFFBB127),
