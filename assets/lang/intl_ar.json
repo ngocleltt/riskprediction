@@ -168,5 +168,22 @@
   "enter_your_comment": "أدخل تعليقك هنا...",
   "add_report": "إضافة تقرير",
   "error_empty_fields": "يرجى إضافة صورة وتعليق.",
-  "report_submitted": "تم إرسال التقرير بنجاح!"
+  "report_submitted": "تم إرسال التقرير بنجاح!",
+  "risk_report": "تقرير المخاطر",
+  "risk_report_description": "يرجى تقديم تفاصيل حول الخطر الذي تبلغ عنه. مساهمتك قيمة بالنسبة لنا.",
+  "choose_image_source": "اختر مصدر الصورة",
+  "gallery": "المعرض",
+  "camera": "الكاميرا",
+  "your_picture_here": "صورتك هنا",
+  "your_rating": "تقييمك: ",
+  "enter_your_comment": "أدخل تعليقك هنا...",
+  "add_report": "إضافة تقرير",
+  "cancel": "إلغاء",
+  "emergency": "حالة طارئة",
+  "review_needed": "تحتاج إلى مراجعة",
+  "more_info_needed": "مزيد من المعلومات مطلوب",
+  "potential_risk": "خطر محتمل",
+  "poison": "تسمم",
+  "other_risks": "مخاطر أخرى",
+  "please_select_risk_type": "يرجى اختيار نوع الخطر."
 }

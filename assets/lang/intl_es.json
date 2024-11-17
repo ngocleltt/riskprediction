@@ -166,5 +166,22 @@
   "enter_your_comment": "Introduce tu comentario aquí...",
   "add_report": "Añadir informe",
   "error_empty_fields": "Por favor, añade una imagen y un comentario.",
-  "report_submitted": "¡Informe enviado con éxito!"
+  "report_submitted": "¡Informe enviado con éxito!",
+  "risk_report": "Reporte de Riesgo",
+  "risk_report_description": "Por favor proporcione los detalles del riesgo que está reportando. Su aporte es valioso para nosotros.",
+  "choose_image_source": "Seleccione la fuente de la imagen",
+  "gallery": "Galería",
+  "camera": "Cámara",
+  "your_picture_here": "Tu imagen aquí",
+  "your_rating": "Tu Calificación: ",
+  "enter_your_comment": "Ingrese su comentario aquí...",
+  "add_report": "Agregar Reporte",
+  "cancel": "Cancelar",
+  "emergency": "Emergencia",
+  "review_needed": "Revisión Necesaria",
+  "more_info_needed": "Se Necesita Más Información",
+  "potential_risk": "Riesgo Potencial",
+  "poison": "Envenenamiento",
+  "other_risks": "Otros Riesgos",
+  "please_select_risk_type": "Por favor seleccione un tipo de riesgo."
 }

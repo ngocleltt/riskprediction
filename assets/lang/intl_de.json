@@ -172,5 +172,22 @@
   "enter_your_comment": "Geben Sie Ihren Kommentar ein...",
   "add_report": "Bericht hinzufügen",
   "error_empty_fields": "Bitte fügen Sie ein Bild und einen Kommentar hinzu.",
-  "report_submitted": "Bericht erfolgreich eingereicht!"
+  "report_submitted": "Bericht erfolgreich eingereicht!",
+  "risk_report": "Risikobericht",
+  "risk_report_description": "Bitte geben Sie die Details des Risikos an, das Sie melden möchten. Ihr Beitrag ist wertvoll für uns.",
+  "choose_image_source": "Bildquelle auswählen",
+  "gallery": "Galerie",
+  "camera": "Kamera",
+  "your_picture_here": "Ihr Bild hier",
+  "your_rating": "Ihre Bewertung: ",
+  "enter_your_comment": "Geben Sie hier Ihren Kommentar ein...",
+  "add_report": "Bericht hinzufügen",
+  "cancel": "Abbrechen",
+  "emergency": "Notfall",
+  "review_needed": "Überprüfung erforderlich",
+  "more_info_needed": "Weitere Informationen erforderlich",
+  "potential_risk": "Potentielles Risiko",
+  "poison": "Vergiftung",
+  "other_risks": "Andere Risiken",
+  "please_select_risk_type": "Bitte wählen Sie einen Risikotyp aus."
 }

@@ -22,6 +22,16 @@ class SubmitReportScreen extends StatefulWidget {
 class _SubmitReportScreenState extends State<SubmitReportScreen> {
   int _selectedStars = 0;
   File? _selectedImage;
+  String? _selectedRiskType;
+
+  final List<String> _riskTypes = [
+    "Emergency",
+    "Review Needed",
+    "More Info Needed",
+    "Potential Risk",
+    "Poison",
+    "Other Risks",
+  ];
 
   Future<void> _pickImageFromGallery() async {
     final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -145,16 +155,7 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              // Dòng mô tả
-              Text(
-                AppLocalizations.of(context)?.translate('risk_report_description') ??
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                textAlign: TextAlign.center,
-                style: AppStyles.subbodyStyle.copyWith(fontSize: 16, color: Colors.black54),
-              ),
               SizedBox(height: 20),
-
-              // Hình ảnh
               GestureDetector(
                 onTap: _showImageSourceDialog,
                 child: Container(
@@ -177,16 +178,7 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
                       : Icon(Icons.add, size: 50, color: Color(0xFFFBB127)),
                 ),
               ),
-              SizedBox(height: 10),
-
-              // Dòng chữ "Your picture here"
-              Text(
-                AppLocalizations.of(context)?.translate('your_picture_here') ?? 'Your picture here',
-                style: AppStyles.bodyStyle.copyWith(fontWeight: FontWeight.bold, color: Color(0xFFFBB127)),
-              ),
               SizedBox(height: 20),
-
-              // Đánh giá sao
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
@@ -207,13 +199,29 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
               ),
               SizedBox(height: 10),
 
-              Text(
-                AppLocalizations.of(context)?.translate('your_rating') ?? 'Your Rating: $_selectedStars Stars',
-                style: AppStyles.bodyStyle.copyWith(fontWeight: FontWeight.bold, color: Colors.black87),
+              Column(
+                children: _riskTypes.map((type) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: RadioListTile<String>(
+                      value: type,
+                      groupValue: _selectedRiskType,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedRiskType = value;
+                        });
+                      },
+                      title: Text(
+                        type,
+                        style: AppStyles.bodyStyle.copyWith(color: Colors.black87),
+                      ),
+                      activeColor: Color(0xFFFBB127),
+                    ),
+                  );
+                }).toList(),
               ),
               SizedBox(height: 20),
 
-              // Hộp nhập bình luận
               Container(
                 decoration: BoxDecoration(
                   color: Colors.grey[100],
@@ -232,10 +240,18 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
               ),
               SizedBox(height: 30),
 
-              // Nút Add Report
               ElevatedButton(
                 onPressed: () {
-                  print('Add Report button pressed');
+                  if (_selectedRiskType == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Please select a risk type.'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+                  print('Report submitted with risk type: $_selectedRiskType');
                   print('Selected stars: $_selectedStars');
                 },
                 style: ElevatedButton.styleFrom(

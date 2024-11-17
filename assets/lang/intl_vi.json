@@ -172,5 +172,22 @@
   "enter_your_comment": "Nhập ghi chú của bạn...",
   "add_report": "Thêm báo cáo",
   "error_empty_fields": "Vui lòng thêm ảnh và ghi chú.",
-  "report_submitted": "Báo cáo đã được gửi thành công!"
+  "report_submitted": "Báo cáo đã được gửi thành công!",
+  "risk_report": "Báo cáo rủi ro",
+  "risk_report_description": "Vui lòng cung cấp chi tiết về rủi ro bạn đang báo cáo. Đóng góp của bạn rất quý giá với chúng tôi.",
+  "choose_image_source": "Chọn nguồn ảnh",
+  "gallery": "Thư viện",
+  "camera": "Máy ảnh",
+  "your_picture_here": "Hình ảnh của bạn",
+  "your_rating": "Đánh giá của bạn: ",
+  "enter_your_comment": "Nhập bình luận của bạn tại đây...",
+  "add_report": "Thêm báo cáo",
+  "cancel": "Hủy",
+  "emergency": "Khẩn cấp",
+  "review_needed": "Cần đánh giá",
+  "more_info_needed": "Cần thêm thông tin",
+  "potential_risk": "Rủi ro tiềm ẩn",
+  "poison": "Ngộ độc",
+  "other_risks": "Các rủi ro khác",
+  "please_select_risk_type": "Vui lòng chọn loại rủi ro."
 }

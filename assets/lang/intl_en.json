@@ -203,5 +203,22 @@
   "enter_your_comment": "Enter Your Comment Here...",
   "add_report": "Add Report",
   "error_empty_fields": "Please add an image and a comment.",
-  "report_submitted": "Report submitted successfully!"
+  "report_submitted": "Report submitted successfully!",
+  "risk_report": "Risk Report",
+  "risk_report_description": "Please provide the details of the risk you are reporting. Your input is valuable to us.",
+  "choose_image_source": "Choose Image Source",
+  "gallery": "Gallery",
+  "camera": "Camera",
+  "your_picture_here": "Your picture here",
+  "your_rating": "Your Rating: ",
+  "enter_your_comment": "Enter Your Comment Here...",
+  "add_report": "Add Report",
+  "cancel": "Cancel",
+  "emergency": "Emergency",
+  "review_needed": "Review Needed",
+  "more_info_needed": "More Info Needed",
+  "potential_risk": "Potential Risk",
+  "poison": "Poison",
+  "other_risks": "Other Risks",
+  "please_select_risk_type": "Please select a risk type."
 }
