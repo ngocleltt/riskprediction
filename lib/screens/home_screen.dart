@@ -213,8 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
             label,
             textAlign: TextAlign.center,
             style: AppStyles.subbodyStyle.copyWith(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
+              fontSize: 13,
               color: Colors.white,
             ),
           ),

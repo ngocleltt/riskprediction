@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'package:riskprediction/app_localizations.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
@@ -33,6 +32,7 @@ class SubmitSuccessScreen extends StatelessWidget {
         actions: [
           LanguageSelector(
             onLocaleChange: onLocaleChange,
+            iconColor: Colors.white,
           ),
         ],
       ),
@@ -43,7 +43,7 @@ class SubmitSuccessScreen extends StatelessWidget {
           children: [
             Icon(
               Icons.check_circle_outline,
-              size: 120,
+              size: 180,
               color: Colors.white,
             ),
             SizedBox(height: 20),
@@ -105,7 +105,7 @@ class SubmitSuccessScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            formattedDate,
+                            formattedDate, // Hiển thị ngày
                             style: AppStyles.subbodyStyle.copyWith(
                               color: Colors.black54,
                             ),
@@ -117,7 +117,7 @@ class SubmitSuccessScreen extends StatelessWidget {
                           Icon(Icons.access_time, size: 16, color: Colors.black54),
                           SizedBox(width: 5),
                           Text(
-                            formattedTime,
+                            formattedTime, // Hiển thị giờ
                             style: AppStyles.subbodyStyle.copyWith(
                               color: Colors.black54,
                             ),

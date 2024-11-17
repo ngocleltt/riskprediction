@@ -24,14 +24,16 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
   File? _selectedImage;
   String? _selectedRiskType;
 
-  final List<String> _riskTypes = [
-    "Emergency",
-    "Review Needed",
-    "More Info Needed",
-    "Potential Risk",
-    "Poison",
-    "Other Risks",
-  ];
+  List<String> get _localizedRiskTypes {
+    return [
+      AppLocalizations.of(context)?.translate('emergency') ?? 'Emergency',
+      AppLocalizations.of(context)?.translate('review_needed') ?? 'Review Needed',
+      AppLocalizations.of(context)?.translate('more_info_needed') ?? 'More Info Needed',
+      AppLocalizations.of(context)?.translate('potential_risk') ?? 'Potential Risk',
+      AppLocalizations.of(context)?.translate('poison') ?? 'Poison',
+      AppLocalizations.of(context)?.translate('other_risks') ?? 'Other Risks',
+    ];
+  }
 
   Future<void> _pickImageFromGallery() async {
     final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -147,7 +149,7 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
           style: AppStyles.subHeadingStyle.copyWith(color: Colors.white),
         ),
         actions: [
-          LanguageSelector(onLocaleChange: widget.onLocaleChange),
+          LanguageSelector(onLocaleChange: widget.onLocaleChange, iconColor: Colors.white),
         ],
       ),
       body: SingleChildScrollView(
@@ -194,7 +196,7 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
               SizedBox(height: 20),
 
               Column(
-                children: _riskTypes.map((type) {
+                children: _localizedRiskTypes.map((type) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: RadioListTile<String>(
@@ -272,7 +274,6 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
                   style: AppStyles.bodyStyle.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               )
-
             ],
           ),
         ),

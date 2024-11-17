@@ -4,13 +4,17 @@ import 'package:riskprediction/styles/app_style.dart';
 
 class LanguageSelector extends StatelessWidget {
   final Function(Locale) onLocaleChange;
+  final Color iconColor;
 
-  LanguageSelector({required this.onLocaleChange});
+  LanguageSelector({
+    required this.onLocaleChange,
+    this.iconColor =  const Color(0xFFFBB127),
+  });
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.language, color: Color(0xFFFBB127)),
+      icon: Icon(Icons.language, color: iconColor),
       onPressed: () {
         showDialog(
           context: context,

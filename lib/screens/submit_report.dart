@@ -25,14 +25,16 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
   File? _selectedImage;
   String? _selectedRiskType;
 
-  final List<String> _riskTypes = [
-    "Emergency",
-    "Review Needed",
-    "More Info Needed",
-    "Potential Risk",
-    "Poison",
-    "Other Risks",
-  ];
+  List<String> get _localizedRiskTypes {
+    return [
+      AppLocalizations.of(context)?.translate('emergency') ?? 'Emergency',
+      AppLocalizations.of(context)?.translate('review_needed') ?? 'Review Needed',
+      AppLocalizations.of(context)?.translate('more_info_needed') ?? 'More Info Needed',
+      AppLocalizations.of(context)?.translate('potential_risk') ?? 'Potential Risk',
+      AppLocalizations.of(context)?.translate('poison') ?? 'Poison',
+      AppLocalizations.of(context)?.translate('other_risks') ?? 'Other Risks',
+    ];
+  }
 
   Future<void> _pickImageFromGallery() async {
     final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -148,7 +150,7 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
           style: AppStyles.subHeadingStyle.copyWith(color: Colors.white),
         ),
         actions: [
-          LanguageSelector(onLocaleChange: widget.onLocaleChange),
+          LanguageSelector(onLocaleChange: widget.onLocaleChange, iconColor: Colors.white,),
         ],
       ),
       body: SingleChildScrollView(
@@ -199,9 +201,8 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
                 ),
               ),
               SizedBox(height: 10),
-
               Column(
-                children: _riskTypes.map((type) {
+                children: _localizedRiskTypes.map((type) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: RadioListTile<String>(
@@ -222,7 +223,6 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
                 }).toList(),
               ),
               SizedBox(height: 20),
-
               Container(
                 decoration: BoxDecoration(
                   color: Colors.grey[100],
@@ -240,7 +240,6 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
                 ),
               ),
               SizedBox(height: 30),
-
               ElevatedButton(
                 onPressed: () {
                   if (_selectedRiskType == null) {
@@ -279,7 +278,6 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
                   style: AppStyles.bodyStyle.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               )
-
             ],
           ),
         ),

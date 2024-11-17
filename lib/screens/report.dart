@@ -45,6 +45,7 @@ class _ReportScreenState extends State<ReportScreen> {
         actions: [
           LanguageSelector(
             onLocaleChange: widget.onLocaleChange,
+            iconColor: Colors.white,
           ),
         ],
       ),

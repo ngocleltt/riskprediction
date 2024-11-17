@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:riskprediction/screens/faq.dart';
 import 'package:riskprediction/screens/license.dart';
 import 'package:riskprediction/screens/profile_screen.dart';
+import 'package:riskprediction/screens/settings/settings_screen.dart';
+import 'package:riskprediction/screens/splash_screen.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/custom_bottom_navigation_bar.dart';
 import 'package:riskprediction/app_localizations.dart';
@@ -63,8 +65,8 @@ class _UserScreenState extends State<UserScreen> {
               child: ListView(
                 children: [
                   _buildUserOption(context, Icons.person, AppLocalizations.of(context)?.translate('profile') ?? ''),
-                  _buildUserOption(context, Icons.favorite, AppLocalizations.of(context)?.translate('favorite') ?? ''),
-                  _buildUserOption(context, Icons.payment, AppLocalizations.of(context)?.translate('payment_method') ?? ''),
+                  _buildUserOption(context, Icons.history, AppLocalizations.of(context)?.translate('favorite') ?? ''),
+                  _buildUserOption(context, Icons.book_outlined, AppLocalizations.of(context)?.translate('payment_method') ?? ''),
                   _buildUserOption(context, Icons.privacy_tip, AppLocalizations.of(context)?.translate('privacy_policy') ?? ''),
                   _buildUserOption(context, Icons.settings, AppLocalizations.of(context)?.translate('settings') ?? ''),
                   _buildUserOption(context, Icons.help_outline, AppLocalizations.of(context)?.translate('help') ?? ''),
@@ -100,7 +102,9 @@ class _UserScreenState extends State<UserScreen> {
       ),
       trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey),
       onTap: () {
-        if (title == AppLocalizations.of(context)?.translate('profile')) {
+        if (title == AppLocalizations.of(context)?.translate('logout')) {
+          _showLogoutDialog(context);
+        } else  if (title == AppLocalizations.of(context)?.translate('profile')) {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -110,7 +114,7 @@ class _UserScreenState extends State<UserScreen> {
               ),
             ),
           );
-        } else if (title == AppLocalizations.of(context)?.translate('privacy_policy')) {
+        } else  if (title == AppLocalizations.of(context)?.translate('privacy_policy')) {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -130,9 +134,69 @@ class _UserScreenState extends State<UserScreen> {
               ),
             ),
           );
+        } else if (title == AppLocalizations.of(context)?.translate('settings')) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SettingsScreen(
+                onLocaleChange: widget.onLocaleChange,
+                currentLocale: widget.currentLocale,
+              ),
+            ),
+          );
         }
       },
     );
   }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.amber[50],
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: Text(
+            'Logout',
+            style: AppStyles.subHeadingStyle.copyWith(color: Color(0xFFFBB127), fontSize: 20, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          content: Text(
+            'Are you sure you want to log out?',
+            style: AppStyles.bodyStyle.copyWith(color: Colors.black87, fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            TextButton(
+              child: Text(
+                'Cancel',
+                style: AppStyles.bodyStyle.copyWith(color: Color(0xFF0F44FF), fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                'Yes, Logout',
+                style:  AppStyles.bodyStyle.copyWith(color: Color(0xFFFBB127), fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SplashScreen(
+                    onLocaleChange: widget.onLocaleChange,
+                    currentLocale: widget.currentLocale,
+                  ),),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
 }
