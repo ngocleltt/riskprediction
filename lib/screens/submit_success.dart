@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import 'package:riskprediction/app_localizations.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
@@ -15,6 +17,10 @@ class SubmitSuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DateTime now = DateTime.now();
+    final String formattedDate = DateFormat('MMMM d, yyyy').format(now);
+    final String formattedTime = DateFormat('h:mm a').format(now);
+
     return Scaffold(
       backgroundColor: Color(0xFFFBB127),
       appBar: AppBar(
@@ -41,7 +47,6 @@ class SubmitSuccessScreen extends StatelessWidget {
               color: Colors.white,
             ),
             SizedBox(height: 20),
-
             Text(
               AppLocalizations.of(context)?.translate('congratulation') ?? 'Congratulation',
               style: AppStyles.headingStyle.copyWith(
@@ -51,7 +56,6 @@ class SubmitSuccessScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10),
-
             Text(
               AppLocalizations.of(context)?.translate('report_successfully') ?? 'Report is successfully',
               style: AppStyles.subbodyStyle.copyWith(
@@ -61,7 +65,6 @@ class SubmitSuccessScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 30),
-
             Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -102,7 +105,7 @@ class SubmitSuccessScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            'Month 24, Year',
+                            formattedDate,
                             style: AppStyles.subbodyStyle.copyWith(
                               color: Colors.black54,
                             ),
@@ -114,7 +117,7 @@ class SubmitSuccessScreen extends StatelessWidget {
                           Icon(Icons.access_time, size: 16, color: Colors.black54),
                           SizedBox(width: 5),
                           Text(
-                            '10:00 AM',
+                            formattedTime,
                             style: AppStyles.subbodyStyle.copyWith(
                               color: Colors.black54,
                             ),
