@@ -196,5 +196,10 @@
   "home": "Trang chủ",
   "report": "Báo cáo",
   "user": "Người dùng",
-  "settings": "Cài đặt"
+  "settings": "Cài đặt",
+  "allergy": "Dị ứng",
+  "what_allergy": "Bạn dị ứng với loại đồ ăn nào?",
+  "cant_eat_food": "Loại thức ăn không ăn được",
+  "cant_eat_reason": "Lý do",
+  "cant_eat" : "Không thể ăn"
 }

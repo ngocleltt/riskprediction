@@ -190,5 +190,9 @@
   "home": "Inicio",
   "report": "Reporte",
   "user": "Usuario",
-  "settings": "Configuración"
+  "settings": "Configuración",
+  "allergy": "Alergia",
+  "what_allergy": "¿A qué tipo de comida eres alérgico?",
+  "cant_eat_food": "Tipo de comida que no puedes comer",
+  "cant_eat_reason": "Razón"
 }

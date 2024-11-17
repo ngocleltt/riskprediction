@@ -192,5 +192,9 @@
   "home": "الرئيسية",
   "report": "تقرير",
   "user": "المستخدم",
-  "settings": "الإعدادات"
+  "settings": "الإعدادات",
+  "allergy": "アレルギー",
+  "what_allergy": "どのような食べ物にアレルギーがありますか？",
+  "cant_eat_food": "食べられない食品の種類",
+  "cant_eat_reason": "理由"
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riskprediction/screens/document.dart';
 import 'package:riskprediction/screens/faq.dart';
 import 'package:riskprediction/screens/license.dart';
 import 'package:riskprediction/screens/profile_screen.dart';
@@ -141,6 +142,14 @@ class _UserScreenState extends State<UserScreen> {
               builder: (context) => SettingsScreen(
                 onLocaleChange: widget.onLocaleChange,
                 currentLocale: widget.currentLocale,
+              ),
+            ),
+          );
+        } else if (title == AppLocalizations.of(context)?.translate('payment_method')) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DocumentScreen(
               ),
             ),
           );

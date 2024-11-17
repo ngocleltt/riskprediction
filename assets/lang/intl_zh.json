@@ -194,5 +194,9 @@
   "home": "首页",
   "report": "报告",
   "user": "用户",
-  "settings": "设置"
+  "settings": "设置",
+  "allergy": "过敏",
+  "what_allergy": "你对哪种食物过敏？",
+  "cant_eat_food": "不能吃的食物类型",
+  "cant_eat_reason": "原因"
 }

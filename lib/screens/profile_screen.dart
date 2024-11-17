@@ -4,6 +4,50 @@ import 'package:riskprediction/app_localizations.dart';
 import 'package:riskprediction/widgets/custom_bottom_navigation_bar.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 
+class EditableProfileField extends StatelessWidget {
+  final String label;
+  final String initialValue;
+  final String? hintText;
+  final int maxLines;
+
+  const EditableProfileField({
+    required this.label,
+    required this.initialValue,
+    this.hintText,
+    this.maxLines = 1,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppStyles.subHeadingStyle.copyWith(fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 5),
+        TextFormField(
+          initialValue: initialValue.isNotEmpty ? initialValue : null,
+          maxLines: maxLines,
+          decoration: InputDecoration(
+            hintText: hintText,
+            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            filled: true,
+            fillColor: Colors.orange.shade50,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          style: AppStyles.bodyStyle.copyWith(fontSize: 16, color: Colors.black38),
+        ),
+      ],
+    );
+  }
+}
+
 class ProfileScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
   final Locale currentLocale;
@@ -16,15 +60,20 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   int _currentIndex = 0;
+  bool isNormalDiet = true;
+  bool isVegetarianDiet = false;
+  bool isAllergyDiet = false;
+  bool isCantEat = false;
+
+  String allergyDetails = '';
+  String cantEatFood = '';
+  String cantEatReason = '';
 
   void _onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
   }
-  bool isNormalDiet = true;
-  bool isVegetarianDiet = false;
-  bool isAllergyDiet = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           style: AppStyles.subHeadingStyle.copyWith(color: Colors.white),
         ),
         actions: [
-          LanguageSelector(onLocaleChange: widget.onLocaleChange),
+          LanguageSelector(onLocaleChange: widget.onLocaleChange, iconColor: Colors.white,),
         ],
       ),
       body: SingleChildScrollView(
@@ -57,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 alignment: Alignment.bottomRight,
                 child: GestureDetector(
                   onTap: () {
-                    // Add functionality to change profile picture
+
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -74,17 +123,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             SizedBox(height: 20),
-            _buildEditableProfileField(AppLocalizations.of(context)?.translate('full_name') ?? '', 'Huynh Tran An Binh'),
+            EditableProfileField(
+              label: AppLocalizations.of(context)?.translate('full_name') ?? '',
+              initialValue: 'Huynh Tran An Binh',
+            ),
             SizedBox(height: 10),
-            _buildEditableProfileField(AppLocalizations.of(context)?.translate('phone_number') ?? '', '+123 567 89000'),
+            EditableProfileField(
+              label: AppLocalizations.of(context)?.translate('phone_number') ?? '',
+              initialValue: '+123 567 89000',
+            ),
             SizedBox(height: 10),
-            _buildEditableProfileField(AppLocalizations.of(context)?.translate('email') ?? '', 'anbinh@example.com'),
+            EditableProfileField(
+              label: AppLocalizations.of(context)?.translate('email') ?? '',
+              initialValue: 'anbinh@example.com',
+            ),
             SizedBox(height: 10),
-            _buildEditableProfileField(AppLocalizations.of(context)?.translate('date_of_birth') ?? '', 'DD / MM / YYYY'),
+            EditableProfileField(
+              label: AppLocalizations.of(context)?.translate('date_of_birth') ?? '',
+              initialValue: 'DD / MM / YYYY',
+            ),
             SizedBox(height: 20),
             _buildDietOptions(),
             SizedBox(height: 20),
-            _buildEditableProfileField(AppLocalizations.of(context)?.translate('bio') ?? '', AppLocalizations.of(context)?.translate('write_bio') ?? '', maxLines: 5),
+            EditableProfileField(
+              label: AppLocalizations.of(context)?.translate('bio') ?? '',
+              initialValue: '',
+              hintText: AppLocalizations.of(context)?.translate('write_bio') ?? '',
+              maxLines: 5,
+            ),
             SizedBox(height: 30),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -95,6 +161,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
               ),
               onPressed: () {
+
               },
               child: Text(
                 AppLocalizations.of(context)?.translate('update_profile') ?? '',
@@ -113,33 +180,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildEditableProfileField(String label, String initialValue, {int maxLines = 1}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppStyles.subHeadingStyle.copyWith(fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 5),
-        TextFormField(
-          initialValue: initialValue,
-          maxLines: maxLines,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            filled: true,
-            fillColor: Colors.orange.shade50,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide.none,
-            ),
-          ),
-          style: AppStyles.bodyStyle.copyWith(fontSize: 16, color: Colors.black38),
-        ),
-      ],
-    );
-  }
-
   Widget _buildDietOptions() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,42 +189,103 @@ class _ProfileScreenState extends State<ProfileScreen> {
           style: AppStyles.subHeadingStyle.copyWith(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 10),
-        Column(
-          children: [
-            _buildDietOption(AppLocalizations.of(context)?.translate('normal') ?? '', isNormalDiet, (value) {
+        _buildSwitchRow('normal', isNormalDiet, (value) {
+          setState(() {
+            isNormalDiet = value;
+          });
+        }),
+        _buildSwitchRow('vegetarian', isVegetarianDiet, (value) {
+          setState(() {
+            isVegetarianDiet = value;
+          });
+        }),
+        _buildSwitchRow('allergy', isAllergyDiet, (value) {
+          setState(() {
+            isAllergyDiet = value;
+          });
+        }),
+        if (isAllergyDiet) ...[
+          SizedBox(height: 10),
+          TextFormField(
+            onChanged: (value) {
               setState(() {
-                isNormalDiet = value;
+                allergyDetails = value;
               });
-            }),
-            SizedBox(height: 10),
-            _buildDietOption(AppLocalizations.of(context)?.translate('vegetarian') ?? '', isVegetarianDiet, (value) {
+            },
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)?.translate('what_allergy') ??
+                  'What kind of food are you allergic to?',
+              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              filled: true,
+              fillColor: Colors.orange.shade50,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ],
+        _buildSwitchRow("cant_eat", isCantEat, (value) {
+          setState(() {
+            isCantEat = value;
+          });
+        }),
+        if (isCantEat) ...[
+          SizedBox(height: 10),
+          TextFormField(
+            onChanged: (value) {
               setState(() {
-                isVegetarianDiet = value;
+                cantEatFood = value;
               });
-            }),
-            SizedBox(height: 10),
-            _buildDietOption(AppLocalizations.of(context)?.translate('allergy') ?? '', isAllergyDiet, (value) {
+            },
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)?.translate('cant_eat_food') ??
+                  "Can't eat food...",
+              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              filled: true,
+              fillColor: Colors.orange.shade50,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          TextFormField(
+            onChanged: (value) {
               setState(() {
-                isAllergyDiet = value;
+                cantEatReason = value;
               });
-            }),
-          ],
-        ),
+            },
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)?.translate('cant_eat_reason') ??
+                  'Lý do',
+              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              filled: true,
+              fillColor: Colors.orange.shade50,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ],
       ],
     );
   }
 
-  Widget _buildDietOption(String label, bool value, Function(bool) onChanged) {
+  Widget _buildSwitchRow(String key, bool value, ValueChanged<bool> onChanged) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        Text(
+          AppLocalizations.of(context)?.translate(key) ?? '',
+          style: AppStyles.bodyStyle.copyWith(fontSize: 16),
+        ),
         Switch(
           value: value,
           onChanged: onChanged,
           activeColor: Colors.orange,
-        ),
-        Text(
-          label,
-          style: AppStyles.bodyStyle.copyWith(fontSize: 16),
         ),
       ],
     );

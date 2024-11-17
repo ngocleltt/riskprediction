@@ -227,5 +227,10 @@
   "home": "Home",
   "report": "Report",
   "user": "User",
-  "settings": "Settings"
+  "settings": "Settings",
+  "allergy": "Allergy",
+  "what_allergy": "What kind of food are you allergic to?",
+  "cant_eat" : "Can't eat",
+  "cant_eat_food": "Type of food you can't eat",
+  "cant_eat_reason": "Reason"
 }
