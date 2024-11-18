@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "268636260180",
+    "project_id": "riskprediction2024",
+    "storage_bucket": "riskprediction2024.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268636260180:android:05095f641b9d4c3143eac1",
+        "android_client_info": {
+          "package_name": "com.example.riskprediction"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbnmFNYa7yIavl7AhjlKPlFf965Lez3kM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
