@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riskprediction/screens/home_screen.dart';
 import 'package:riskprediction/screens/license.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/screens/welcome_screen.dart';
@@ -6,6 +7,8 @@ import 'package:riskprediction/screens/signup_screen.dart';
 import 'package:riskprediction/app_localizations.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 import 'package:riskprediction/screens/license.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
@@ -51,6 +54,41 @@ class _LoginScreenState extends State<LoginScreen> {
           content: Text(
             AppLocalizations.of(context)?.translate('invalid_credentials') ??
                 'Invalid username or password',
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> _signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        final UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(
+              onLocaleChange: widget.onLocaleChange,
+              currentLocale: widget.currentLocale,
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            AppLocalizations.of(context)?.translate('google_sign_in_failed') ??
+                'Google Sign-In failed: $e',
           ),
         ),
       );
@@ -160,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 IconButton(
                   icon: Icon(Icons.g_mobiledata_rounded, color: Colors.orange),
-                  onPressed: () {},
+                  onPressed: _signInWithGoogle,
                 ),
                 IconButton(
                   icon: Icon(Icons.facebook, color: Colors.orange),

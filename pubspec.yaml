@@ -16,6 +16,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^20.3.52
   firebase_core: ^3.4.0
   firebase_auth: ^5.2.0
+  google_sign_in: ^5.4.0
   flutter_localizations:
     sdk: flutter
 
