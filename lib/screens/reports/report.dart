@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:riskprediction/app_localizations.dart';
+import 'package:riskprediction/screens/reports/anonymous_report.dart';
+import 'package:riskprediction/screens/reports/submit_report.dart';
 import 'package:riskprediction/styles/app_style.dart';
-import 'package:riskprediction/screens/submit_report.dart';
-import 'package:riskprediction/screens/anonymous_report.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 import 'package:riskprediction/widgets/custom_bottom_navigation_bar.dart';
 

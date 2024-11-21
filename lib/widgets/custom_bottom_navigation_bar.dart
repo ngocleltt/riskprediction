@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:riskprediction/screens/home_screen.dart';
+import 'package:riskprediction/screens/reports/report.dart';
 import 'package:riskprediction/screens/settings/settings_screen.dart';
 import 'package:riskprediction/screens/user_screen.dart';
-import 'package:riskprediction/screens/report.dart';
 import 'package:riskprediction/app_localizations.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {

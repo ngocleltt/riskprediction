@@ -1,28 +1,36 @@
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:riskprediction/app_localizations.dart';
-import 'package:riskprediction/screens/submit_success.dart';
+import 'package:riskprediction/screens/reports/submit_success.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 import 'package:riskprediction/widgets/custom_bottom_navigation_bar.dart';
 
-class AnonymousReportScreen extends StatefulWidget {
+class SubmitReportScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
   final Locale currentLocale;
 
-  AnonymousReportScreen({
+  SubmitReportScreen({
     required this.onLocaleChange,
     required this.currentLocale,
   });
 
   @override
-  _AnonymousReportScreenState createState() => _AnonymousReportScreenState();
+  _SubmitReportScreenState createState() => _SubmitReportScreenState();
 }
 
-class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
+class _SubmitReportScreenState extends State<SubmitReportScreen> {
+  int _selectedStars = 0;
   File? _selectedImage;
   String? _selectedRiskType;
+  String? _imageBase64;
+  String? _comment;
+  bool _isSubmitting = false;
 
   List<String> get _localizedRiskTypes {
     return [
@@ -35,11 +43,30 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
     ];
   }
 
+  Future<String?> _getUserName() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final snapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+        if (snapshot.exists) {
+          return snapshot.data()?['fullName'] as String?;
+        }
+      } catch (e) {
+        print("Error fetching user name: $e");
+      }
+    }
+    return null;
+  }
+
   Future<void> _pickImageFromGallery() async {
     final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
+      final File imageFile = File(pickedImage.path);
+      final base64String = await _convertImageToBase64(imageFile);
+
       setState(() {
-        _selectedImage = File(pickedImage.path);
+        _selectedImage = imageFile;
+        _imageBase64 = base64String;
       });
     }
   }
@@ -47,10 +74,19 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
   Future<void> _pickImageFromCamera() async {
     final pickedImage = await ImagePicker().pickImage(source: ImageSource.camera);
     if (pickedImage != null) {
+      final File imageFile = File(pickedImage.path);
+      final base64String = await _convertImageToBase64(imageFile);
+
       setState(() {
-        _selectedImage = File(pickedImage.path);
+        _selectedImage = imageFile;
+        _imageBase64 = base64String;
       });
     }
+  }
+
+  Future<String> _convertImageToBase64(File imageFile) async {
+    final bytes = await imageFile.readAsBytes();
+    return base64Encode(bytes);
   }
 
   void _showImageSourceDialog() {
@@ -94,7 +130,6 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
                 ),
               ),
               SizedBox(height: 15),
-
               ElevatedButton.icon(
                 onPressed: () {
                   Navigator.pop(context);
@@ -134,6 +169,75 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
     );
   }
 
+  Future<void> _submitReport() async {
+    if (_selectedRiskType == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            AppLocalizations.of(context)?.translate('please_select_risk_type') ?? 'Please select a risk type.',
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      _isSubmitting = true;
+    });
+
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+
+      if (user == null) {
+        throw Exception("User is not logged in.");
+      }
+
+      final userName = await _getUserName();
+      if (userName == null) {
+        throw Exception("Unable to fetch user name.");
+      }
+
+      await FirebaseFirestore.instance.collection('reports').add({
+        'userId': user.uid,
+        'userName': userName,
+        'riskType': _selectedRiskType,
+        'stars': _selectedStars,
+        'comment': _comment ?? '',
+        'imageBase64': _imageBase64 ?? '',
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SubmitSuccessScreen(
+            onLocaleChange: widget.onLocaleChange,
+            currentLocale: widget.currentLocale,
+            userName: userName,
+            riskType: _selectedRiskType!,
+            stars: _selectedStars,
+            timestamp: DateTime.now(),
+          ),
+        ),
+      );
+    } catch (e) {
+      print("Error submitting report: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            AppLocalizations.of(context)?.translate('submission_failed') ?? 'Submission failed. Please try again.',
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      setState(() {
+        _isSubmitting = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,11 +249,14 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          AppLocalizations.of(context)?.translate('anonymous_report') ?? 'Anonymous Report',
+          AppLocalizations.of(context)?.translate('risk_report') ?? 'Risk Report',
           style: AppStyles.subHeadingStyle.copyWith(color: Colors.white),
         ),
         actions: [
-          LanguageSelector(onLocaleChange: widget.onLocaleChange, iconColor: Colors.white),
+          LanguageSelector(
+            onLocaleChange: widget.onLocaleChange,
+            iconColor: Colors.white,
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -157,14 +264,6 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Text(
-                AppLocalizations.of(context)?.translate('anonymous_report_description') ??
-                    'Your name and personal information will be kept confidential from everyone.',
-                textAlign: TextAlign.center,
-                style: AppStyles.subbodyStyle.copyWith(fontSize: 16, color: Colors.black54),
-              ),
-              SizedBox(height: 20),
-
               GestureDetector(
                 onTap: _showImageSourceDialog,
                 child: Container(
@@ -187,14 +286,26 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
                       : Icon(Icons.add, size: 50, color: Color(0xFFFBB127)),
                 ),
               ),
-              SizedBox(height: 10),
-
-              Text(
-                AppLocalizations.of(context)?.translate('your_picture_here') ?? 'Your picture here',
-                style: AppStyles.bodyStyle.copyWith(fontWeight: FontWeight.bold, color: Color(0xFFFBB127)),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  5,
+                      (index) => IconButton(
+                    icon: Icon(
+                      index < _selectedStars ? Icons.star : Icons.star_border,
+                      color: Colors.amber,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _selectedStars = index + 1;
+                      });
+                    },
+                  ),
+                ),
               ),
               SizedBox(height: 20),
-
               Column(
                 children: _localizedRiskTypes.map((type) {
                   return Padding(
@@ -217,7 +328,6 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
                 }).toList(),
               ),
               SizedBox(height: 20),
-
               Container(
                 decoration: BoxDecoration(
                   color: Colors.grey[100],
@@ -226,6 +336,11 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
                 ),
                 child: TextField(
                   maxLines: 5,
+                  onChanged: (value) {
+                    setState(() {
+                      _comment = value;
+                    });
+                  },
                   decoration: InputDecoration(
                     hintText: AppLocalizations.of(context)?.translate('enter_your_comment') ?? 'Enter Your Comment Here...',
                     hintStyle: AppStyles.subbodyStyle.copyWith(color: Colors.grey),
@@ -235,33 +350,8 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
                 ),
               ),
               SizedBox(height: 30),
-
               ElevatedButton(
-                onPressed: () {
-                  if (_selectedRiskType == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          AppLocalizations.of(context)?.translate('please_select_risk_type') ?? 'Please select a risk type.',
-                        ),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                    return;
-                  }
-
-                  print('Anonymous report submitted with risk type: $_selectedRiskType');
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SubmitSuccessScreen(
-                        onLocaleChange: widget.onLocaleChange,
-                        currentLocale: widget.currentLocale,
-                      ),
-                    ),
-                  );
-                },
+                onPressed: _isSubmitting ? null : _submitReport,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFFBB127),
                   shape: RoundedRectangleBorder(
@@ -269,7 +359,9 @@ class _AnonymousReportScreenState extends State<AnonymousReportScreen> {
                   ),
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                 ),
-                child: Text(
+                child: _isSubmitting
+                    ? CircularProgressIndicator(color: Colors.white)
+                    : Text(
                   AppLocalizations.of(context)?.translate('add_report') ?? 'Add Report',
                   style: AppStyles.bodyStyle.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                 ),

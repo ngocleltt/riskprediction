@@ -8,17 +8,24 @@ import 'package:riskprediction/widgets/custom_bottom_navigation_bar.dart';
 class SubmitSuccessScreen extends StatelessWidget {
   final Function(Locale) onLocaleChange;
   final Locale currentLocale;
+  final String userName;
+  final String riskType;
+  final int stars;
+  final DateTime timestamp;
 
   SubmitSuccessScreen({
     required this.onLocaleChange,
     required this.currentLocale,
+    required this.userName,
+    required this.riskType,
+    required this.stars,
+    required this.timestamp,
   });
 
   @override
   Widget build(BuildContext context) {
-    final DateTime now = DateTime.now();
-    final String formattedDate = DateFormat('MMMM d, yyyy').format(now);
-    final String formattedTime = DateFormat('h:mm a').format(now);
+    final String formattedDate = DateFormat('MMMM d, yyyy').format(timestamp);
+    final String formattedTime = DateFormat('h:mm a').format(timestamp);
 
     return Scaffold(
       backgroundColor: Color(0xFFFBB127),
@@ -57,7 +64,7 @@ class SubmitSuccessScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              AppLocalizations.of(context)?.translate('report_successfully') ?? 'Report is successfully',
+              AppLocalizations.of(context)?.translate('report_successfully') ?? 'Report is successfully submitted',
               style: AppStyles.subbodyStyle.copyWith(
                 color: Colors.white70,
                 fontSize: 16,
@@ -83,7 +90,7 @@ class SubmitSuccessScreen extends StatelessWidget {
                 children: [
                   Text(
                     AppLocalizations.of(context)?.translate('upload_success') ??
-                        'You have successfully uploaded a report to system',
+                        'You have successfully uploaded a report to the system',
                     style: AppStyles.subbodyStyle.copyWith(
                       fontSize: 14,
                       color: Colors.black87,
@@ -97,7 +104,7 @@ class SubmitSuccessScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Mr. An Binh',
+                            userName,
                             style: AppStyles.bodyStyle.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
@@ -121,6 +128,44 @@ class SubmitSuccessScreen extends StatelessWidget {
                             style: AppStyles.subbodyStyle.copyWith(
                               color: Colors.black54,
                             ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)?.translate('risk_type') ?? 'Risk Type:',
+                            style: AppStyles.bodyStyle.copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            riskType,
+                            style: AppStyles.subbodyStyle.copyWith(color: Colors.black54),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)?.translate('stars') ?? 'Stars:',
+                            style: AppStyles.bodyStyle.copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '$stars',
+                            style: AppStyles.subbodyStyle.copyWith(color: Colors.black54),
                           ),
                         ],
                       ),

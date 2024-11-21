@@ -5,7 +5,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:riskprediction/screens/home_screen.dart';
 import 'package:riskprediction/screens/license.dart';
 import 'package:riskprediction/screens/signup_screen.dart';
-import 'package:riskprediction/screens/welcome_screen.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/app_localizations.dart';
 import 'package:riskprediction/widgets/language_selector.dart';

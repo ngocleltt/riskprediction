@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:riskprediction/screens/welcome_screen.dart';
+import 'package:riskprediction/screens/welcome/welcome_screen.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'dart:async';
 

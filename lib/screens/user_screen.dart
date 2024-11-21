@@ -6,8 +6,9 @@ import 'package:riskprediction/screens/document.dart';
 import 'package:riskprediction/screens/faq.dart';
 import 'package:riskprediction/screens/license.dart';
 import 'package:riskprediction/screens/profile_screen.dart';
+import 'package:riskprediction/screens/reports/history.dart';
 import 'package:riskprediction/screens/settings/settings_screen.dart';
-import 'package:riskprediction/screens/splash_screen.dart';
+import 'package:riskprediction/screens/welcome/splash_screen.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/custom_bottom_navigation_bar.dart';
 import 'package:riskprediction/app_localizations.dart';
@@ -215,6 +216,14 @@ class _UserScreenState extends State<UserScreen> {
             context,
             MaterialPageRoute(
               builder: (context) => DocumentScreen(),
+            ),
+          );
+        } else if (title ==
+            AppLocalizations.of(context)?.translate('favorite')) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HistoryScreen(onLocaleChange: widget.onLocaleChange, currentLocale: widget.currentLocale),
             ),
           );
         }
