@@ -6,7 +6,6 @@ import 'package:riskprediction/screens/welcome_screen.dart';
 import 'package:riskprediction/screens/signup_screen.dart';
 import 'package:riskprediction/app_localizations.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
-import 'package:riskprediction/screens/license.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -24,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isPasswordVisible = false;
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void didChangeDependencies() {
@@ -37,26 +37,31 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  void _login() {
-    if (_usernameController.text == 'admin' && _passwordController.text == 'admin') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => WelcomeScreen( //change to adminscreen
-            onLocaleChange: widget.onLocaleChange,
-            currentLocale: widget.currentLocale,
+  Future<void> _login() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _usernameController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WelcomeScreen(
+              onLocaleChange: widget.onLocaleChange,
+              currentLocale: widget.currentLocale,
+            ),
           ),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            AppLocalizations.of(context)?.translate('invalid_credentials') ??
-                'Invalid username or password',
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)?.translate('login_failed') ?? 'Login failed: $e',
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
   }
 
@@ -76,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => HomeScreen(
+            builder: (context) => LicenseScreen(
               onLocaleChange: widget.onLocaleChange,
               currentLocale: widget.currentLocale,
             ),
@@ -112,124 +117,135 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              AppLocalizations.of(context)?.translate('login') ?? 'Log In',
-              style: AppStyles.headingStyle.copyWith(color: Color(0xFF0F44FF)),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20),
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)?.translate('email_or_mobile') ??
-                    'Email or Mobile Number',
-                hintText: 'example@example.com',
-                labelStyle: AppStyles.bodyStyle.copyWith(color: AppStyles.bodyStyle.color?.withOpacity(0.3)),
-                hintStyle: AppStyles.bodyStyle.copyWith(color: AppStyles.bodyStyle.color?.withOpacity(0.5)),
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              controller: _passwordController,
-              obscureText: !_isPasswordVisible,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)?.translate('password') ?? 'Password',
-                hintText: '********',
-                labelStyle: AppStyles.bodyStyle.copyWith(color: AppStyles.bodyStyle.color?.withOpacity(0.3)),
-                hintStyle: AppStyles.bodyStyle.copyWith(color: AppStyles.bodyStyle.color?.withOpacity(0.5)),
-                border: OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                  ),
-                  onPressed: _togglePasswordVisibility,
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {},
-                child: Text(
-                  AppLocalizations.of(context)?.translate('forget_password') ??
-                      'Forget Password',
-                  style: AppStyles.bodyStyle.copyWith(color: Colors.grey),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LicenseScreen(
-                      onLocaleChange: widget.onLocaleChange,
-                      currentLocale: widget.currentLocale,
-                    ),
-                  ),
-                );
-              },
-              child: Text(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
                 AppLocalizations.of(context)?.translate('login') ?? 'Log In',
-                style: AppStyles.bodyStyle.copyWith(color: Colors.white),
+                style: AppStyles.headingStyle.copyWith(color: Color(0xFF0F44FF)),
+                textAlign: TextAlign.center,
               ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFBB127),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _usernameController,
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)?.translate('email_or_mobile') ??
+                      'Email or Mobile Number',
+                  hintText: 'example@example.com',
+                  labelStyle: AppStyles.bodyStyle.copyWith(
+                      color: AppStyles.bodyStyle.color?.withOpacity(0.3)),
+                  hintStyle: AppStyles.bodyStyle.copyWith(
+                      color: AppStyles.bodyStyle.color?.withOpacity(0.5)),
+                  border: OutlineInputBorder(),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 14, horizontal: 64),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppLocalizations.of(context)?.translate('email_required') ??
+                        'Please enter your email';
+                  }
+                  return null;
+                },
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              AppLocalizations.of(context)?.translate('or_sign_up_with') ?? 'or sign up with',
-              style: AppStyles.bodyStyle.copyWith(color: Colors.grey),
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.g_mobiledata_rounded, color: Colors.orange),
-                  onPressed: _signInWithGoogle,
-                ),
-                IconButton(
-                  icon: Icon(Icons.facebook, color: Colors.orange),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(Icons.fingerprint, color: Colors.orange),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SignupScreen(
-                      onLocaleChange: widget.onLocaleChange,
-                      currentLocale: widget.currentLocale,
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _passwordController,
+                obscureText: !_isPasswordVisible,
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)?.translate('password') ?? 'Password',
+                  hintText: '********',
+                  labelStyle: AppStyles.bodyStyle.copyWith(
+                      color: AppStyles.bodyStyle.color?.withOpacity(0.3)),
+                  hintStyle: AppStyles.bodyStyle.copyWith(
+                      color: AppStyles.bodyStyle.color?.withOpacity(0.5)),
+                  border: OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
                     ),
+                    onPressed: _togglePasswordVisibility,
                   ),
-                );
-              },
-              child: Text(
-                AppLocalizations.of(context)?.translate('dont_have_account') ??
-                    "Don't have an account? Sign Up",
-                style: AppStyles.bodyStyle.copyWith(color: Colors.orange),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppLocalizations.of(context)?.translate('password_required') ??
+                        'Please enter your password';
+                  }
+                  return null;
+                },
               ),
-            ),
-          ],
+              SizedBox(height: 10),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    AppLocalizations.of(context)?.translate('forget_password') ??
+                        'Forget Password',
+                    style: AppStyles.bodyStyle.copyWith(color: Colors.grey),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _login,
+                child: Text(
+                  AppLocalizations.of(context)?.translate('login') ?? 'Log In',
+                  style: AppStyles.bodyStyle.copyWith(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFFBB127),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 14, horizontal: 64),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                AppLocalizations.of(context)?.translate('or_sign_up_with') ?? 'or sign up with',
+                style: AppStyles.bodyStyle.copyWith(color: Colors.grey),
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.g_mobiledata_rounded, color: Colors.orange),
+                    onPressed: _signInWithGoogle,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.facebook, color: Colors.orange),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.fingerprint, color: Colors.orange),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SignupScreen(
+                        onLocaleChange: widget.onLocaleChange,
+                        currentLocale: widget.currentLocale,
+                      ),
+                    ),
+                  );
+                },
+                child: Text(
+                  AppLocalizations.of(context)?.translate('dont_have_account') ??
+                      "Don't have an account? Sign Up",
+                  style: AppStyles.bodyStyle.copyWith(color: Colors.orange),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,62 +1,123 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riskprediction/screens/license.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/screens/login_screen.dart';
 import 'package:riskprediction/app_localizations.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
 
-  class SignupScreen extends StatefulWidget {
-    final Function(Locale) onLocaleChange;
-    final Locale currentLocale;
+class SignupScreen extends StatefulWidget {
+  final Function(Locale) onLocaleChange;
+  final Locale currentLocale;
 
-    SignupScreen({required this.onLocaleChange, required this.currentLocale});
-    @override
-    _SignupScreenState createState() => _SignupScreenState();
+  SignupScreen({required this.onLocaleChange, required this.currentLocale});
+  @override
+  _SignupScreenState createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+  bool _isPasswordVisible = false;
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _mobileNumberController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _isPasswordVisible = !_isPasswordVisible;
+    });
   }
 
-  class _SignupScreenState extends State<SignupScreen> {
-    bool _isPasswordVisible = false;
-    final TextEditingController _fullNameController = TextEditingController();
-    final TextEditingController _emailController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
-    final TextEditingController _mobileNumberController = TextEditingController();
-    final TextEditingController _dobController = TextEditingController();
+  Future<void> _registerUser() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
 
-    void _togglePasswordVisibility() {
-      setState(() {
-        _isPasswordVisible = !_isPasswordVisible;
-      });
-    }
+        User? user = userCredential.user;
 
-    @override
-    void initState() {
-      super.initState();
-    }
+        if (user != null) {
+          try {
+            await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+              'fullName': _fullNameController.text.trim(),
+              'email': _emailController.text.trim(),
+              'mobileNumber': _mobileNumberController.text.trim(),
+              'dob': _dobController.text.trim(),
+              'createdAt': FieldValue.serverTimestamp(),
+            });
+          } catch (firestoreError) {
+            print("Firestore Error: $firestoreError");
+            throw Exception("Failed to save user data to Firestore");
+          }
 
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            AppLocalizations.of(context)?.translate('sign_up') ?? 'New Account',
-            style: AppStyles.subHeadingStyle,
+          print("User registered and data saved successfully");
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LicenseScreen(
+                onLocaleChange: widget.onLocaleChange,
+                currentLocale: widget.currentLocale,
+              ),
+            ),
+          );
+          print("Navigation to LicenseScreen successful");
+        }
+      } on FirebaseAuthException catch (authError) {
+        print("FirebaseAuth Error: $authError");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)?.translate('signup_failed') ??
+                  'Sign up failed: ${authError.message}',
+            ),
           ),
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Color(0xFFFBB127)),
-            onPressed: () => Navigator.pop(context),
+        );
+      } catch (e) {
+        print("Error during sign up: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)?.translate('signup_failed') ?? 'Sign up failed: $e',
+            ),
           ),
-          actions: [
-            LanguageSelector(onLocaleChange: widget.onLocaleChange),
-          ],
+        );
+      }
+    }
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          AppLocalizations.of(context)?.translate('sign_up') ?? 'New Account',
+          style: AppStyles.subHeadingStyle,
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 20.0),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Color(0xFFFBB127)),
+          onPressed: () => Navigator.pop(context),
+        ),
+        actions: [
+          LanguageSelector(onLocaleChange: widget.onLocaleChange),
+        ],
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 20.0),
+        child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
+              TextFormField(
                 controller: _fullNameController,
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)?.translate('full_name') ?? 'Full name',
@@ -66,9 +127,15 @@ import 'package:riskprediction/widgets/language_selector.dart';
                   border: OutlineInputBorder(),
                 ),
                 style: AppStyles.bodyStyle,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppLocalizations.of(context)?.translate('name_required') ?? 'Name is required';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 20),
-              TextField(
+              TextFormField(
                 controller: _passwordController,
                 obscureText: !_isPasswordVisible,
                 decoration: InputDecoration(
@@ -85,9 +152,16 @@ import 'package:riskprediction/widgets/language_selector.dart';
                   ),
                 ),
                 style: AppStyles.bodyStyle,
+                validator: (value) {
+                  if (value == null || value.length < 6) {
+                    return AppLocalizations.of(context)?.translate('password_too_short') ??
+                        'Password must be at least 6 characters';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 20),
-              TextField(
+              TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)?.translate('email') ?? 'Email',
@@ -97,9 +171,15 @@ import 'package:riskprediction/widgets/language_selector.dart';
                   border: OutlineInputBorder(),
                 ),
                 style: AppStyles.bodyStyle,
+                validator: (value) {
+                  if (value == null || !value.contains('@')) {
+                    return AppLocalizations.of(context)?.translate('invalid_email') ?? 'Invalid email address';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 20),
-              TextField(
+              TextFormField(
                 controller: _mobileNumberController,
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)?.translate('mobile_number') ?? 'Mobile Number',
@@ -111,7 +191,7 @@ import 'package:riskprediction/widgets/language_selector.dart';
                 style: AppStyles.bodyStyle,
               ),
               SizedBox(height: 20),
-              TextField(
+              TextFormField(
                 controller: _dobController,
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)?.translate('date_of_birth') ?? 'Date Of Birth',
@@ -124,28 +204,16 @@ import 'package:riskprediction/widgets/language_selector.dart';
               ),
               SizedBox(height: 20),
               Center(
-                child: Text(
-                  AppLocalizations.of(context)?.translate('terms_of_use') ??
-                      'By continuing, you agree to Terms of Use and Privacy Policy.',
-                  textAlign: TextAlign.center,
-                  style: AppStyles.bodyStyle.copyWith(color: Colors.grey, fontSize: 12),
-                ),
-              ),
-              SizedBox(height: 20),
-              Center(
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LicenseScreen(
-                          onLocaleChange: widget.onLocaleChange,
-                          currentLocale: widget.currentLocale,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Text(AppLocalizations.of(context)?.translate('sign_up') ?? 'Sign Up', style: AppStyles.bodyStyle.copyWith(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white)),
+                  onPressed: _registerUser,
+                  child: Text(
+                    AppLocalizations.of(context)?.translate('sign_up') ?? 'Sign Up',
+                    style: AppStyles.bodyStyle.copyWith(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFFBB127),
                     shape: RoundedRectangleBorder(
@@ -154,29 +222,6 @@ import 'package:riskprediction/widgets/language_selector.dart';
                     padding: EdgeInsets.symmetric(vertical: 14, horizontal: 64),
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Center(
-                child: Text(AppLocalizations.of(context)?.translate('or_sign_up_with') ?? 'or sign up with',
-                    style: AppStyles.bodyStyle.copyWith(color: Colors.grey)),
-              ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.g_mobiledata, color: Color(0xFFFBB127), size: 35),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.facebook, color: Color(0xFFFBB127), size: 30),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.fingerprint,color: Color(0xFFFBB127), size: 30),
-                    onPressed: () {},
-                  ),
-                ],
               ),
               SizedBox(height: 20),
               Center(
@@ -192,12 +237,17 @@ import 'package:riskprediction/widgets/language_selector.dart';
                       ),
                     );
                   },
-                  child: Text(AppLocalizations.of(context)?.translate('already_have_account') ?? "Already have an account? Log in", style: AppStyles.upbarStyle),
+                  child: Text(
+                    AppLocalizations.of(context)?.translate('already_have_account') ??
+                        "Already have an account? Log in",
+                    style: AppStyles.upbarStyle,
+                  ),
                 ),
               ),
             ],
           ),
         ),
-      );
-    }
+      ),
+    );
   }
+}
