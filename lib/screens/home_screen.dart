@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riskprediction/screens/notification.dart';
 import 'package:riskprediction/screens/store_screen.dart';
 import 'package:riskprediction/styles/app_style.dart';
@@ -18,6 +21,41 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+  String _fullName = "Loading...";
+  String _profileImageBase64 = "";
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+
+        if (userDoc.exists) {
+          setState(() {
+            _fullName = userDoc['fullName'] ?? 'Anonymous User';
+            _profileImageBase64 = userDoc['profileImageBase64'] ?? '';
+          });
+        }
+      } catch (e) {
+        print("Error fetching user data: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to load user data.')),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   void _onTabTapped(int index) {
     setState(() {
@@ -31,8 +69,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: CircleAvatar(
-          backgroundImage: AssetImage('assets/images/profile.jpg'),
+        leading: _isLoading
+            ? CircularProgressIndicator()
+            : CircleAvatar(
+          radius: 20,
+          backgroundImage: _profileImageBase64.isNotEmpty
+              ? MemoryImage(base64Decode(_profileImageBase64))
+              : AssetImage('assets/images/profile.jpg') as ImageProvider,
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: AppStyles.bodyStyle.copyWith(color: Colors.orange),
             ),
             Text(
-              'An Binh',
+              _fullName,
               style: AppStyles.headingStyle.copyWith(fontSize: 18, color: Colors.black),
             ),
           ],
@@ -105,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   AppLocalizations.of(context)?.translate('rating') ?? 'Rating',
                   '5',
                       () {
-                    // Hành động khi nhấn vào "Rating"
+                    // Action when "Rating" is tapped
                   },
                 ),
                 SizedBox(width: 10),
@@ -126,7 +169,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-
             SizedBox(height: 20),
             Container(
               padding: EdgeInsets.all(16),
@@ -138,7 +180,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppLocalizations.of(context)?.translate('no_tasks_description') ?? 'We have no tasks for you to complete right now, but if you notice any danger, please let us know.',
+                    AppLocalizations.of(context)?.translate('no_tasks_description') ??
+                        'We have no tasks for you to complete right now, but if you notice any danger, please let us know.',
                     style: AppStyles.bodyStyle,
                   ),
                 ],
@@ -222,7 +265,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   Widget _buildStatCard(String label, String value, VoidCallback onTap) {
     return Expanded(
       child: GestureDetector(
@@ -250,5 +292,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }

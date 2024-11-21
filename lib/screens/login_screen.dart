@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:riskprediction/screens/home_screen.dart';
-import 'package:riskprediction/screens/license.dart';
-import 'package:riskprediction/styles/app_style.dart';
-import 'package:riskprediction/screens/welcome_screen.dart';
-import 'package:riskprediction/screens/signup_screen.dart';
-import 'package:riskprediction/app_localizations.dart';
-import 'package:riskprediction/widgets/language_selector.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:riskprediction/screens/home_screen.dart';
+import 'package:riskprediction/screens/license.dart';
+import 'package:riskprediction/screens/signup_screen.dart';
+import 'package:riskprediction/screens/welcome_screen.dart';
+import 'package:riskprediction/styles/app_style.dart';
+import 'package:riskprediction/app_localizations.dart';
+import 'package:riskprediction/widgets/language_selector.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   @override
   void didChangeDependencies() {
@@ -39,33 +41,75 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login() async {
     if (_formKey.currentState?.validate() ?? false) {
+      setState(() {
+        _isLoading = true;
+      });
       try {
         UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _usernameController.text.trim(),
           password: _passwordController.text.trim(),
         );
-        Navigator.push(
+
+        final user = userCredential.user;
+        if (user != null) {
+          final userDoc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+          if (!userDoc.exists) {
+            await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+              'fullName': user.displayName ?? 'No Name',
+              'email': user.email ?? '',
+              'createdAt': FieldValue.serverTimestamp(),
+              'profileImageBase64': '',
+              'mobileNumber': "",
+              'dob': "",
+              'bio' : "",
+              'isNormalDiet': true,
+              'isVegetarianDiet': false,
+              'isAllergyDiet': false,
+              'isCantEat': false,
+              'allergyDetails': "",
+              'cantEatFood': "",
+              'cantEatReason': "",
+            });
+          }
+        }
+
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => WelcomeScreen(
+            builder: (context) => LicenseScreen(
               onLocaleChange: widget.onLocaleChange,
               currentLocale: widget.currentLocale,
             ),
           ),
         );
+      } on FirebaseAuthException catch (e) {
+        String errorMessage;
+        if (e.code == 'user-not-found') {
+          errorMessage = 'No user found for that email.';
+        } else if (e.code == 'wrong-password') {
+          errorMessage = 'Incorrect password.';
+        } else {
+          errorMessage = 'Login failed. Please try again.';
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage)),
+        );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              AppLocalizations.of(context)?.translate('login_failed') ?? 'Login failed: $e',
-            ),
-          ),
+          SnackBar(content: Text('An error occurred. Please try again.')),
         );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
 
   Future<void> _signInWithGoogle() async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser != null) {
@@ -78,7 +122,24 @@ class _LoginScreenState extends State<LoginScreen> {
         final UserCredential userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
 
-        Navigator.push(
+        final user = userCredential.user;
+
+        // Thêm người dùng vào Firestore nếu chưa tồn tại
+        if (user != null) {
+          final userRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
+          final docSnapshot = await userRef.get();
+
+          if (!docSnapshot.exists) {
+            await userRef.set({
+              'fullName': user.displayName ?? 'No Name',
+              'email': user.email ?? '',
+              'createdAt': FieldValue.serverTimestamp(),
+              'profileImageBase64': '',
+            });
+          }
+        }
+
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => LicenseScreen(
@@ -90,13 +151,12 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            AppLocalizations.of(context)?.translate('google_sign_in_failed') ??
-                'Google Sign-In failed: $e',
-          ),
-        ),
+        SnackBar(content: Text('Google Sign-In failed. Please try again.')),
       );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -181,16 +241,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextButton(
                   onPressed: () {},
                   child: Text(
-                    AppLocalizations.of(context)?.translate('forget_password') ??
-                        'Forget Password',
+                    AppLocalizations.of(context)?.translate('forget_password') ?? 'Forget Password',
                     style: AppStyles.bodyStyle.copyWith(color: Colors.grey),
                   ),
                 ),
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _login,
-                child: Text(
+                onPressed: _isLoading ? null : _login,
+                child: _isLoading
+                    ? CircularProgressIndicator(color: Colors.white)
+                    : Text(
                   AppLocalizations.of(context)?.translate('login') ?? 'Log In',
                   style: AppStyles.bodyStyle.copyWith(color: Colors.white),
                 ),
@@ -213,7 +274,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   IconButton(
                     icon: Icon(Icons.g_mobiledata_rounded, color: Colors.orange),
-                    onPressed: _signInWithGoogle,
+                    onPressed: _isLoading ? null : _signInWithGoogle,
                   ),
                   IconButton(
                     icon: Icon(Icons.facebook, color: Colors.orange),

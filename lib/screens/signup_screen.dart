@@ -49,6 +49,15 @@ class _SignupScreenState extends State<SignupScreen> {
               'mobileNumber': _mobileNumberController.text.trim(),
               'dob': _dobController.text.trim(),
               'createdAt': FieldValue.serverTimestamp(),
+              'bio' : "",
+              'isNormalDiet': true,
+              'isVegetarianDiet': false,
+              'isAllergyDiet': false,
+              'isCantEat': false,
+              'allergyDetails': "",
+              'cantEatFood': "",
+              'cantEatReason': "",
+              'profileImageBase64': ""
             });
           } catch (firestoreError) {
             print("Firestore Error: $firestoreError");

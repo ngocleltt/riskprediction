@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riskprediction/screens/document.dart';
 import 'package:riskprediction/screens/faq.dart';
 import 'package:riskprediction/screens/license.dart';
@@ -22,6 +25,41 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   int _currentIndex = 2;
+  String _fullName = "Loading...";
+  String _profileImageBase64 = "";
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+
+        if (userDoc.exists) {
+          setState(() {
+            _fullName = userDoc['fullName'] ?? 'Anonymous User';
+            _profileImageBase64 = userDoc['profileImageBase64'] ?? '';
+          });
+        }
+      } catch (e) {
+        print("Error fetching user data: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to load user data.')),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   void _onTabTapped(int index) {
     setState(() {
@@ -52,26 +90,50 @@ class _UserScreenState extends State<UserScreen> {
         child: Column(
           children: [
             SizedBox(height: 20),
-            CircleAvatar(
+            _isLoading
+                ? CircularProgressIndicator()
+                : CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('assets/images/profile.jpg'),
+              backgroundImage: _profileImageBase64.isNotEmpty
+                  ? MemoryImage(base64Decode(_profileImageBase64))
+                  : AssetImage('assets/images/profile.jpg') as ImageProvider,
             ),
             SizedBox(height: 10),
             Text(
-              'An Binh',
-              style: AppStyles.subHeadingStyle.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
+              _fullName,
+              style: AppStyles.subHeadingStyle
+                  .copyWith(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 30),
             Expanded(
               child: ListView(
                 children: [
-                  _buildUserOption(context, Icons.person, AppLocalizations.of(context)?.translate('profile') ?? ''),
-                  _buildUserOption(context, Icons.history, AppLocalizations.of(context)?.translate('favorite') ?? ''),
-                  _buildUserOption(context, Icons.book_outlined, AppLocalizations.of(context)?.translate('payment_method') ?? ''),
-                  _buildUserOption(context, Icons.privacy_tip, AppLocalizations.of(context)?.translate('privacy_policy') ?? ''),
-                  _buildUserOption(context, Icons.settings, AppLocalizations.of(context)?.translate('settings') ?? ''),
-                  _buildUserOption(context, Icons.help_outline, AppLocalizations.of(context)?.translate('help') ?? ''),
-                  _buildUserOption(context, Icons.logout, AppLocalizations.of(context)?.translate('logout') ?? ''),
+                  _buildUserOption(context, Icons.person,
+                      AppLocalizations.of(context)?.translate('profile') ?? ''),
+                  _buildUserOption(context, Icons.history,
+                      AppLocalizations.of(context)?.translate('favorite') ?? ''),
+                  _buildUserOption(
+                      context,
+                      Icons.book_outlined,
+                      AppLocalizations.of(context)
+                          ?.translate('payment_method') ??
+                          ''),
+                  _buildUserOption(
+                      context,
+                      Icons.privacy_tip,
+                      AppLocalizations.of(context)
+                          ?.translate('privacy_policy') ??
+                          ''),
+                  _buildUserOption(context, Icons.settings,
+                      AppLocalizations.of(context)?.translate('settings') ?? ''),
+                  _buildUserOption(
+                      context,
+                      Icons.help_outline,
+                      AppLocalizations.of(context)?.translate('help') ?? ''),
+                  _buildUserOption(
+                      context,
+                      Icons.logout,
+                      AppLocalizations.of(context)?.translate('logout') ?? ''),
                 ],
               ),
             ),
@@ -99,13 +161,14 @@ class _UserScreenState extends State<UserScreen> {
       ),
       title: Text(
         title,
-        style: AppStyles.bodyStyle.copyWith(color: Color(0xFFFBB127), fontSize: 16, fontWeight: FontWeight.w600),
+        style: AppStyles.bodyStyle.copyWith(
+            color: Color(0xFFFBB127), fontSize: 16, fontWeight: FontWeight.w600),
       ),
       trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey),
       onTap: () {
         if (title == AppLocalizations.of(context)?.translate('logout')) {
           _showLogoutDialog(context);
-        } else  if (title == AppLocalizations.of(context)?.translate('profile')) {
+        } else if (title == AppLocalizations.of(context)?.translate('profile')) {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -115,7 +178,8 @@ class _UserScreenState extends State<UserScreen> {
               ),
             ),
           );
-        } else  if (title == AppLocalizations.of(context)?.translate('privacy_policy')) {
+        } else if (title ==
+            AppLocalizations.of(context)?.translate('privacy_policy')) {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -145,12 +209,12 @@ class _UserScreenState extends State<UserScreen> {
               ),
             ),
           );
-        } else if (title == AppLocalizations.of(context)?.translate('payment_method')) {
+        } else if (title ==
+            AppLocalizations.of(context)?.translate('payment_method')) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DocumentScreen(
-              ),
+              builder: (context) => DocumentScreen(),
             ),
           );
         }
@@ -167,7 +231,8 @@ class _UserScreenState extends State<UserScreen> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: Text(
             'Logout',
-            style: AppStyles.subHeadingStyle.copyWith(color: Color(0xFFFBB127), fontSize: 20, fontWeight: FontWeight.bold),
+            style: AppStyles.subHeadingStyle.copyWith(
+                color: Color(0xFFFBB127), fontSize: 20, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           content: Text(
@@ -179,7 +244,8 @@ class _UserScreenState extends State<UserScreen> {
             TextButton(
               child: Text(
                 'Cancel',
-                style: AppStyles.bodyStyle.copyWith(color: Color(0xFF0F44FF), fontWeight: FontWeight.bold),
+                style: AppStyles.bodyStyle
+                    .copyWith(color: Color(0xFF0F44FF), fontWeight: FontWeight.bold),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -188,16 +254,19 @@ class _UserScreenState extends State<UserScreen> {
             TextButton(
               child: Text(
                 'Yes, Logout',
-                style:  AppStyles.bodyStyle.copyWith(color: Color(0xFFFBB127), fontWeight: FontWeight.bold),
+                style: AppStyles.bodyStyle
+                    .copyWith(color: Color(0xFFFBB127), fontWeight: FontWeight.bold),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => SplashScreen(
-                    onLocaleChange: widget.onLocaleChange,
-                    currentLocale: widget.currentLocale,
-                  ),),
+                  MaterialPageRoute(
+                    builder: (context) => SplashScreen(
+                      onLocaleChange: widget.onLocaleChange,
+                      currentLocale: widget.currentLocale,
+                    ),
+                  ),
                 );
               },
             ),
@@ -206,6 +275,4 @@ class _UserScreenState extends State<UserScreen> {
       },
     );
   }
-
-
 }
