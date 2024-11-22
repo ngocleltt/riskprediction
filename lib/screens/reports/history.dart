@@ -70,23 +70,32 @@ class _HistoryScreenState extends State<HistoryScreen> {
               .limit(10)
               .get(),
         ]);
-        if (snapshots.isEmpty) {
-          print("No reports found for user: $userName");
-        }
       } else {
+        print("User fetching own reports");
+        Query userQuery = _firestore
+            .collection('reports')
+            .where('userId', isEqualTo: user.uid)
+            .orderBy('timestamp', descending: true)
+            .limit(10);
+
+        if (_lastDocument != null) {
+          userQuery = userQuery.startAfterDocument(_lastDocument!);
+        }
+
         snapshots = [
-          await query.where('userId', isEqualTo: user.uid).get(),
+          await userQuery.get(),
         ];
       }
 
-      // Xử lý kết quả
+
       for (var snapshot in snapshots) {
         if (snapshot.docs.isNotEmpty) {
           _lastDocument = snapshot.docs.last;
           _reports.addAll(snapshot.docs.map((doc) {
             final data = doc.data() as Map<String, dynamic>;
-            // Nếu là anonymous_reports thì đặt userName là 'anonymous'
-            String userName = snapshot == snapshots[1] ? "anonymous" : (data['userName'] ?? 'Unknown');
+            String userName = snapshots.length > 1 && snapshot == snapshots[1]
+                ? "anonymous"
+                : (data['userName'] ?? 'Unknown');
             return {
               'userName': userName,
               'riskType': data['riskType'] ?? 'Unknown',
@@ -100,6 +109,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           _hasMoreReports = false;
         }
       }
+
     } catch (e) {
       print("Error fetching reports: $e");
     }
@@ -225,7 +235,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
           }
           return false;
         },
-        child: ListView.builder(
+        child: _reports.isEmpty && !_isLoading
+            ? Center(
+          child: Text(
+            AppLocalizations.of(context)?.translate('no_reports') ?? 'No reports available',
+            style: AppStyles.bodyStyle,
+          ),
+        )
+            : ListView.builder(
           padding: EdgeInsets.all(16),
           itemCount: _reports.length + (_isLoading ? 1 : 0),
           itemBuilder: (context, index) {
