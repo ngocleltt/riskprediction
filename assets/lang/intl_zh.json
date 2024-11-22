@@ -227,5 +227,15 @@
   "contact_4_title": "Facebook",
   "contact_4_info": "访问：facebook.com/example",
   "contact_5_title": "Instagram",
-  "contact_5_info": "关注我们：@example"
+  "contact_5_info": "关注我们：@example",
+  "report_history": "报告历史",
+  "stars": "星级",
+  "date": "日期",
+  "user": "用户",
+  "no_reports": "未找到报告",
+  "error_loading": "加载报告时出错",
+  "report_details": "报告详情",
+  "comment": "评论",
+  "close": "关闭",
+  "risk_type": "风险类型"
 }

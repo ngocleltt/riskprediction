@@ -218,5 +218,15 @@
   "contact_4_title": "Facebook",
   "contact_4_info": "Посетите: facebook.com/example",
   "contact_5_title": "Instagram",
-  "contact_5_info": "Подписывайтесь на нас: @example"
+  "contact_5_info": "Подписывайтесь на нас: @example",
+  "report_history": "История отчетов",
+  "stars": "Звезды",
+  "date": "Дата",
+  "user": "Пользователь",
+  "no_reports": "Отчеты не найдены",
+  "error_loading": "Ошибка загрузки отчетов",
+  "report_details": "Детали отчета",
+  "comment": "Комментарий",
+  "close": "Закрыть",
+  "risk_type": "Тип риска"
 }

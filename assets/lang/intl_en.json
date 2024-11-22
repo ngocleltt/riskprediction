@@ -232,5 +232,15 @@
   "what_allergy": "What kind of food are you allergic to?",
   "cant_eat" : "Can't eat",
   "cant_eat_food": "Type of food you can't eat",
-  "cant_eat_reason": "Reason"
+  "cant_eat_reason": "Reason",
+  "report_history": "Report History",
+  "stars": "Stars",
+  "date": "Date",
+  "user": "User",
+  "no_reports": "No reports found",
+  "error_loading": "Error loading reports",
+  "report_details": "Report Details",
+  "comment": "Comment",
+  "close": "Close",
+  "risk_type": "Risk Type"
 }

@@ -223,5 +223,15 @@
   "contact_4_title": "Facebook",
   "contact_4_info": "Visita: facebook.com/example",
   "contact_5_title": "Instagram",
-  "contact_5_info": "Síguenos: @example"
+  "contact_5_info": "Síguenos: @example",
+  "report_history": "Historial de informes",
+  "stars": "Estrellas",
+  "date": "Fecha",
+  "user": "Usuario",
+  "no_reports": "No se encontraron informes",
+  "error_loading": "Error al cargar informes",
+  "report_details": "Detalles del informe",
+  "comment": "Comentario",
+  "close": "Cerrar",
+  "risk_type": "Tipo de riesgo"
 }

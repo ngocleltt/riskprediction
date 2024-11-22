@@ -230,5 +230,15 @@
   "contact_4_title": "Facebook",
   "contact_4_info": "Truy cập: facebook.com/example",
   "contact_5_title": "Instagram",
-  "contact_5_info": "Theo dõi: @example"
+  "contact_5_info": "Theo dõi: @example",
+  "report_history": "Lịch sử báo cáo",
+  "stars": "Số sao",
+  "date": "Ngày",
+  "user": "Người dùng",
+  "no_reports": "Không có báo cáo nào",
+  "error_loading": "Lỗi tải báo cáo",
+  "report_details": "Chi tiết báo cáo",
+  "comment": "Nhận xét",
+  "close": "Đóng",
+  "risk_type": "Loại rủi ro"
 }

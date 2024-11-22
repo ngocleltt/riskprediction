@@ -23,7 +23,7 @@ class _FAQScreenState extends State<FAQScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFBB127), // Thay đổi màu cam chủ đạo
+        backgroundColor: Color(0xFFFBB127),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -31,7 +31,7 @@ class _FAQScreenState extends State<FAQScreen> {
         ),
         title: Text(
           AppLocalizations.of(context)?.translate('help_center') ?? 'Help Center',
-          style: AppStyles.headingStyle.copyWith(color: Colors.white),
+          style: AppStyles.subHeadingStyle.copyWith(color: Colors.white),
         ),
         actions: [
           LanguageSelector(

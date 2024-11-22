@@ -22,89 +22,181 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  late Future<List<Map<String, dynamic>>> _userReports;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<Map<String, dynamic>> _reports = [];
+  bool _isLoading = false;
+  DocumentSnapshot? _lastDocument;
+  bool _hasMoreReports = true;
 
   @override
   void initState() {
     super.initState();
-    _userReports = _fetchUserReports();
+    _fetchMoreReports();
   }
 
-  Future<List<Map<String, dynamic>>> _fetchUserReports() async {
+  Future<void> _fetchMoreReports() async {
+    if (_isLoading || !_hasMoreReports) return;
+
+    setState(() {
+      _isLoading = true;
+    });
+
     User? user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      return [];
-    }
+    if (user == null) return;
 
     try {
-      QuerySnapshot snapshot = await FirebaseFirestore.instance
-          .collection('reports')
-          .where('userId', isEqualTo: user.uid)
-          .orderBy('timestamp', descending: true)
-          .get();
+      // Lấy thông tin username từ Firestore
+      DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
+      String userName = (userDoc.data() as Map<String, dynamic>)['fullName'] ?? 'Unknown';
 
-      return snapshot.docs.map((doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        return {
-          'userName': data['userName'] ?? 'Unknown', // Lấy userName
-          'riskType': data['riskType'] ?? 'Unknown',
-          'stars': data['stars'] ?? 0,
-          'imageBase64': data['imageBase64'] ?? '',
-          'timestamp': (data['timestamp'] as Timestamp).toDate(),
-        };
-      }).toList();
+      Query query = _firestore
+          .collection('reports')
+          .orderBy('timestamp', descending: true)
+          .limit(10);
+
+      if (_lastDocument != null) {
+        query = query.startAfterDocument(_lastDocument!);
+      }
+
+      List<QuerySnapshot> snapshots = [];
+
+      if (userName == "Admin") {
+        print("Admin fetching all reports and anonymous_reports");
+        snapshots = await Future.wait([
+          query.get(),
+          _firestore
+              .collection('anonymous_reports')
+              .orderBy('timestamp', descending: true)
+              .limit(10)
+              .get(),
+        ]);
+        if (snapshots.isEmpty) {
+          print("No reports found for user: $userName");
+        }
+      } else {
+        snapshots = [
+          await query.where('userId', isEqualTo: user.uid).get(),
+        ];
+      }
+
+      // Xử lý kết quả
+      for (var snapshot in snapshots) {
+        if (snapshot.docs.isNotEmpty) {
+          _lastDocument = snapshot.docs.last;
+          _reports.addAll(snapshot.docs.map((doc) {
+            final data = doc.data() as Map<String, dynamic>;
+            // Nếu là anonymous_reports thì đặt userName là 'anonymous'
+            String userName = snapshot == snapshots[1] ? "anonymous" : (data['userName'] ?? 'Unknown');
+            return {
+              'userName': userName,
+              'riskType': data['riskType'] ?? 'Unknown',
+              'stars': data['stars'] ?? 0,
+              'imageBase64': data['imageBase64'] ?? '',
+              'comment': data['comment'] ?? 'No comment',
+              'timestamp': (data['timestamp'] as Timestamp).toDate(),
+            };
+          }).toList());
+        } else {
+          _hasMoreReports = false;
+        }
+      }
     } catch (e) {
       print("Error fetching reports: $e");
-      return [];
     }
-  }
 
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   Widget _buildReportItem(Map<String, dynamic> report) {
     String formattedDate = DateFormat('dd/MM/yyyy').format(report['timestamp']);
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      margin: EdgeInsets.symmetric(vertical: 8),
-      elevation: 3,
-      child: ListTile(
-        leading: report['imageBase64'] != null && report['imageBase64'].isNotEmpty
-            ? CircleAvatar(
-          backgroundImage: MemoryImage(base64Decode(report['imageBase64'])),
-          radius: 25,
-        )
-            : CircleAvatar(
-          backgroundColor: Colors.grey[200],
-          child: Icon(Icons.image_not_supported, color: Colors.grey),
-          radius: 25,
+    return GestureDetector(
+      onTap: () => _showReportDetails(report),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
         ),
-        title: Text(
-          report['riskType'],
-          style: AppStyles.subHeadingStyle.copyWith(fontSize: 16),
+        margin: EdgeInsets.symmetric(vertical: 8),
+        elevation: 3,
+        child: ListTile(
+          leading: report['imageBase64'] != null && report['imageBase64'].isNotEmpty
+              ? CircleAvatar(
+            backgroundImage: MemoryImage(base64Decode(report['imageBase64'])),
+            radius: 25,
+          )
+              : CircleAvatar(
+            backgroundColor: Colors.grey[200],
+            child: Icon(Icons.image_not_supported, color: Colors.grey),
+            radius: 25,
+          ),
+          title: Text(
+            report['riskType'],
+            style: AppStyles.subHeadingStyle.copyWith(fontSize: 16),
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${AppLocalizations.of(context)?.translate('stars') ?? 'Stars'}: ${report['stars']}",
+                style: AppStyles.bodyStyle.copyWith(fontSize: 14, color: Colors.grey[600]),
+              ),
+              Text(
+                "${AppLocalizations.of(context)?.translate('date') ?? 'Date'}: $formattedDate",
+                style: AppStyles.bodyStyle.copyWith(fontSize: 14, color: Colors.grey[600]),
+              ),
+            ],
+          ),
+          trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "${AppLocalizations.of(context)?.translate('stars') ?? 'Stars'}: ${report['stars']}",
-              style: AppStyles.bodyStyle.copyWith(fontSize: 14, color: Colors.grey[600]),
-            ),
-            Text(
-              "${AppLocalizations.of(context)?.translate('date') ?? 'Date'}: $formattedDate",
-              style: AppStyles.bodyStyle.copyWith(fontSize: 14, color: Colors.grey[600]),
-            ),
-            Text(
-              "${AppLocalizations.of(context)?.translate('user') ?? 'User'}: ${report['userName']}",
-              style: AppStyles.bodyStyle.copyWith(fontSize: 14, color: Colors.grey[600]),
-            ),
-          ],
-        ),
-        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
       ),
     );
   }
 
+  void _showReportDetails(Map<String, dynamic> report) {
+    String detailedDate =
+    DateFormat('dd/MM/yyyy HH:mm:ss').format(report['timestamp']);
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            AppLocalizations.of(context)?.translate('report_details') ?? 'Report Details',
+            style: AppStyles.subHeadingStyle.copyWith(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${AppLocalizations.of(context)?.translate('username') ?? 'Username'}: ${report['userName']}",
+                style: AppStyles.bodyStyle,
+              ),
+              SizedBox(height: 5),
+              Text(
+                "${AppLocalizations.of(context)?.translate('comment') ?? 'Comment'}: ${report['comment']}",
+                style: AppStyles.bodyStyle,
+              ),
+              SizedBox(height: 5),
+              Text(
+                "${AppLocalizations.of(context)?.translate('date') ?? 'Date'}: $detailedDate",
+                style: AppStyles.bodyStyle,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(AppLocalizations.of(context)?.translate('close') ?? 'Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,41 +216,25 @@ class _HistoryScreenState extends State<HistoryScreen> {
           LanguageSelector(onLocaleChange: widget.onLocaleChange, iconColor: Colors.white),
         ],
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: _userReports,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (scrollNotification) {
+          if (scrollNotification.metrics.pixels ==
+              scrollNotification.metrics.maxScrollExtent &&
+              !_isLoading) {
+            _fetchMoreReports();
           }
-
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                AppLocalizations.of(context)?.translate('error_loading') ?? 'Error loading reports',
-                style: AppStyles.bodyStyle.copyWith(color: Colors.red),
-              ),
-            );
-          }
-
-          final reports = snapshot.data ?? [];
-
-          if (reports.isEmpty) {
-            return Center(
-              child: Text(
-                AppLocalizations.of(context)?.translate('no_reports') ?? 'No reports found',
-                style: AppStyles.bodyStyle.copyWith(color: Colors.grey),
-              ),
-            );
-          }
-
-          return ListView.builder(
-            padding: EdgeInsets.all(16),
-            itemCount: reports.length,
-            itemBuilder: (context, index) {
-              return _buildReportItem(reports[index]);
-            },
-          );
+          return false;
         },
+        child: ListView.builder(
+          padding: EdgeInsets.all(16),
+          itemCount: _reports.length + (_isLoading ? 1 : 0),
+          itemBuilder: (context, index) {
+            if (index == _reports.length) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return _buildReportItem(_reports[index]);
+          },
+        ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 2,

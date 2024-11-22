@@ -225,5 +225,15 @@
   "contact_4_title": "Facebook",
   "contact_4_info": "زيارة: facebook.com/example",
   "contact_5_title": "Instagram",
-  "contact_5_info": "تابعنا على: @example"
+  "contact_5_info": "تابعنا على: @example",
+  "report_history": "سجل التقارير",
+  "stars": "النجوم",
+  "date": "التاريخ",
+  "user": "المستخدم",
+  "no_reports": "لا توجد تقارير",
+  "error_loading": "خطأ في تحميل التقارير",
+  "report_details": "تفاصيل التقرير",
+  "comment": "تعليق",
+  "close": "إغلاق",
+  "risk_type": "نوع المخاطر"
 }
