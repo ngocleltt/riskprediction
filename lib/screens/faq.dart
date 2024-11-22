@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:riskprediction/app_localizations.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
+import 'chatbot_screen.dart';
 
 class FAQScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
@@ -150,6 +151,19 @@ class _FAQScreenState extends State<FAQScreen> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xFFFBB127),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatbotScreen(),
+            ),
+          );
+        },
+        child: Icon(Icons.chat, color: Colors.white),
+        tooltip: AppLocalizations.of(context)?.translate('chatbot_tooltip') ?? 'Chat with us',
       ),
     );
   }

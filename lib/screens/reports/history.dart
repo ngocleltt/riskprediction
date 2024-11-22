@@ -45,7 +45,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
     if (user == null) return;
 
     try {
-      // Lấy thông tin username từ Firestore
       DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
       String userName = (userDoc.data() as Map<String, dynamic>)['fullName'] ?? 'Unknown';
 
