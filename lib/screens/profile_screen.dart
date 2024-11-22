@@ -121,6 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     if (pickedFile != null) {
       final File imageFile = File(pickedFile.path);
+
       final imageBase64 = await _convertImageToBase64(imageFile);
 
       setState(() {
@@ -212,6 +213,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 label: AppLocalizations.of(context)?.translate('date_of_birth') ?? '',
                 initialValue: _dobController.text,
                 hintText: 'DD/MM/YYYY',
+              ),
+              SizedBox(height: 10),
+              EditableProfileField(
+                label: AppLocalizations.of(context)?.translate('bio') ?? '',
+                initialValue: _bioController.text,
+                hintText: 'Enter your bio here',
               ),
               SizedBox(height: 20),
               _buildDietOptions(),

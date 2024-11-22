@@ -1,8 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'package:riskprediction/app_localizations.dart';
 import 'package:riskprediction/styles/app_style.dart';
 import 'package:riskprediction/widgets/language_selector.dart';
@@ -46,9 +46,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
       return snapshot.docs.map((doc) {
         final data = doc.data() as Map<String, dynamic>;
         return {
-          'riskType': data['riskType'],
-          'stars': data['stars'],
-          'imageBase64': data['imageBase64'],
+          'userName': data['userName'] ?? 'Unknown', // Lấy userName
+          'riskType': data['riskType'] ?? 'Unknown',
+          'stars': data['stars'] ?? 0,
+          'imageBase64': data['imageBase64'] ?? '',
           'timestamp': (data['timestamp'] as Timestamp).toDate(),
         };
       }).toList();
@@ -58,8 +59,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
     }
   }
 
+
   Widget _buildReportItem(Map<String, dynamic> report) {
-    String formattedDate = "${report['timestamp'].day}/${report['timestamp'].month}/${report['timestamp'].year}";
+    String formattedDate = DateFormat('dd/MM/yyyy').format(report['timestamp']);
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -78,7 +80,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           radius: 25,
         ),
         title: Text(
-          report['riskType'] ?? AppLocalizations.of(context)?.translate('unknown') ?? 'Unknown',
+          report['riskType'],
           style: AppStyles.subHeadingStyle.copyWith(fontSize: 16),
         ),
         subtitle: Column(
@@ -92,15 +94,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
               "${AppLocalizations.of(context)?.translate('date') ?? 'Date'}: $formattedDate",
               style: AppStyles.bodyStyle.copyWith(fontSize: 14, color: Colors.grey[600]),
             ),
+            Text(
+              "${AppLocalizations.of(context)?.translate('user') ?? 'User'}: ${report['userName']}",
+              style: AppStyles.bodyStyle.copyWith(fontSize: 14, color: Colors.grey[600]),
+            ),
           ],
         ),
         trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-        onTap: () {
-          // Handle tap on report item if needed
-        },
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
