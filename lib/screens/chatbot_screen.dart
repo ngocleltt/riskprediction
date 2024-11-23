@@ -21,8 +21,19 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         }
       }
     }
-    return "Xin lỗi, tôi không hiểu câu hỏi của bạn.";
+
+    switch (language) {
+      case "vi":
+        return "Xin lỗi, tôi không hiểu câu hỏi của bạn.\nNếu bạn cần hỗ trợ thêm, hãy liên hệ với bộ phận CSKH qua email anbinh16298@gmail.com.";
+      case "en":
+        return "Sorry, I don't understand your question.\nIf you need further assistance, please contact our customer support at anbinh16298@gmail.com.";
+      case "ru":
+        return "Извините, я не понимаю ваш вопрос.\nЕсли вам нужна дополнительная помощь, свяжитесь с нашей службой поддержки по адресу anbinh16298@gmail.com.";
+      default:
+        return "Sorry, I don't understand your question.\nIf you need further assistance, please contact our customer support at anbinh16298@gmail.com.";
+    }
   }
+
 
   void _sendMessage() {
     String userInput = _controller.text.trim();

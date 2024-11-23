@@ -46,6 +46,7 @@ flutter:
     - assets/lang/intl_zh.json
     - assets/lang/intl_es.json
     - assets/lang/intl_ar.json
+    - assets/lang/intl_ja.json
   fonts:
     - family: League Spartan
       fonts:

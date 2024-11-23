@@ -86,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               style: AppStyles.headingStyle.copyWith(color: Colors.white),
             ),
             Text(
-              'Huỳnh Trần An Bình',
+              'Бинь МТБ-23-1',
               style: AppStyles.subHeadingStyle.copyWith(color: Colors.white),
             ),
             SizedBox(height: 40),

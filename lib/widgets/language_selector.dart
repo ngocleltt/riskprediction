@@ -63,9 +63,9 @@ class LanguageSelector extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    title: Text('عربي', style: AppStyles.upbarStyle),
+                    title: Text('日本語', style: AppStyles.upbarStyle),
                     onTap: () {
-                      onLocaleChange(Locale('ar'));
+                      onLocaleChange(Locale('ja'));
                       Navigator.pop(context);
                     },
                   ),
